@@ -1,14 +1,17 @@
 import { useState, createElement, useEffect, useRef } from "react";
 import { navMenus, navIcons, modeIcon, submenu } from "@constants";
 import { getDateTime } from "@utilities/navbar";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const getButtonContent = ({ label }) => {
 	return typeof label === "string" ? label : createElement(label, { className: "w-4 h-4" });
 };
 
-const Navbar = ({ mode, setIsDarkMode }) => {
+const Navbar = ({ mode, setIsDarkMode, activeMenu }) => {
 	const menuRef = useRef(null);
-	const [activeMenu, setActiveMenu] = useState(null);
+	const themeRef = useRef(null);
+	const [activeNavMenu, setActiveNavMenu] = useState(null);
 	const [dropdownXPosition, setDropdownXPosition] = useState(0);
 	const [currentDate, setCurrentDate] = useState(() => getDateTime());
 
@@ -25,7 +28,7 @@ const Navbar = ({ mode, setIsDarkMode }) => {
 		// Close dropdown when clicking outside
 		const handleClickOutside = (event) => {
 			if (menuRef.current && !menuRef.current.contains(event.target)) {
-				setActiveMenu(null);
+				setActiveNavMenu(null);
 			}
 		};
 
@@ -41,17 +44,22 @@ const Navbar = ({ mode, setIsDarkMode }) => {
 		const rect = e.currentTarget.getBoundingClientRect();
 		setDropdownXPosition(rect.left);
 
-		setActiveMenu(id === activeMenu ? null : id);
+		setActiveNavMenu(id === activeNavMenu ? null : id);
 	};
+
+	// Animate theme icon on mode change
+	useGSAP(() => {
+		gsap.fromTo(themeRef.current, { opacity: 0, color: "var(--color-foreground)" }, { opacity: 1, color: "var(--color-foreground)", duration: 0.8 });
+	}, [mode]);
 
 	return (
 		<nav ref={menuRef}>
 			{/* Left menu */}
 			<div>
 				<ul>
-					{navMenus.map(({ id, label, alt }) => (
+					{navMenus(activeMenu).map(({ id, label, alt }) => (
 						<li key={id}>
-							<button aria-label={alt ?? label} onClick={(e) => handleMenuClick(e, id)}>
+							<button aria-label={alt ?? label} onClick={(e) => handleMenuClick(e, id)} className={`${activeMenu === id ? "font-medium" : "font-normal"}`}>
 								{getButtonContent({ label })}
 							</button>
 						</li>
@@ -68,7 +76,7 @@ const Navbar = ({ mode, setIsDarkMode }) => {
 						</li>
 					))}
 					<li>
-						<button aria-label={modeIcon(mode).alt} onClick={() => setIsDarkMode(!mode)}>
+						<button aria-label={modeIcon(mode).alt} onClick={() => setIsDarkMode(!mode)} ref={themeRef}>
 							{getButtonContent({ label: modeIcon(mode).icon })}
 						</button>
 					</li>
@@ -77,10 +85,10 @@ const Navbar = ({ mode, setIsDarkMode }) => {
 			</div>
 
 			{/* Dropdown menu */}
-			{activeMenu && (
+			{activeMenu && submenu({})[activeNavMenu] && (
 				<div className="dropdown-menu" style={{ left: dropdownXPosition }}>
 					<ul>
-						{submenu({ setActiveMenu })[activeMenu]?.map((item, index) => {
+						{submenu({ setActiveNavMenu })[activeNavMenu]?.map((item, index) => {
 							if (item.type === "separator") {
 								return <hr key={index} />;
 							}

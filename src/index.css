@@ -47,6 +47,7 @@
 	--sidebar-border: oklch(0.922 0 0);
 	--sidebar-ring: oklch(0.708 0 0);
 	--background-image: url("/images/Gold.png");
+	--border-white: rgba(255, 255, 255, 0.341);
 }
 
 .dark {
@@ -185,6 +186,10 @@ html {
 	@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
+@utility glassmorphism {
+	@apply backdrop-blur-2xl border border-white/30 rounded-2xl shadow-2xl/50 ring ring-ring;
+}
+
 @layer base {
 	* {
 		@apply border-border outline-ring/50;
@@ -192,6 +197,10 @@ html {
 
 	body {
 		@apply text-foreground font-sf-pro bg-cover bg-center bg-no-repeat bg-(image:--background-image) transition-all duration-1000 ease-in-out;
+	}
+
+	img {
+		@apply select-none pointer-events-none;
 	}
 }
 
@@ -220,7 +229,7 @@ html {
 		}
 
 		.dropdown-menu {
-			@apply absolute top-5 z-50 bg-popover/50 backdrop-blur-2xl text-popover-foreground rounded-md shadow-lg mt-2 p-1 border-muted-foreground/40 border;
+			@apply absolute top-5 z-50 bg-popover/50 text-popover-foreground rounded-md mt-2 p-1 glassmorphism;
 			hr {
 				@apply my-1 border-t border-muted-foreground/40 w-11/12 mx-auto;
 			}
@@ -232,6 +241,24 @@ html {
 						@apply w-full text-left flex justify-between;
 					}
 				}
+			}
+		}
+	}
+
+	#dock {
+		@apply fixed bottom-2 left-1/2 -translate-x-1/2 z-50 bg-transparent p-2;
+
+		.dock-container {
+			@apply flex gap-4 bg-transparent px-3 py-2 glassmorphism;
+
+			.dock-icon {
+				@apply w-14 h-14 rounded-xl flex items-center justify-center drop-shadow-sm;
+			}
+			.dock-pointer {
+				@apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent-foreground/70 rounded-full;
+			}
+			.dock-label {
+				@apply absolute left-1/2 -translate-x-1/2 -top-10 bg-popover/50 border-muted-foreground/40 text-foreground text-xs px-2 py-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none;
 			}
 		}
 	}

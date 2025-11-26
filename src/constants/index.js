@@ -1,8 +1,8 @@
 import { Apple, Wifi, Battery, Volume2, Moon, Sun } from "lucide-react";
 
-export const navMenus = [
+export const navMenus = (activeMenu) => [
 	{ id: "apple", label: Apple, alt: "Apple Menu" },
-	{ id: "portfolio", label: "Portfolio" },
+	{ id: activeMenu, label: activeMenu.charAt(0).toUpperCase() + activeMenu.slice(1) },
 	{ id: "file", label: "File" },
 	{ id: "edit", label: "Edit" },
 	{ id: "view", label: "View" },
@@ -10,13 +10,13 @@ export const navMenus = [
 	{ id: "help", label: "Help" },
 ];
 
-export const submenu = ({ setActiveMenu }) => ({
+export const submenu = ({ setActiveNavMenu }) => ({
 	apple: [
 		{
 			label: "About This App",
 			action: () => {
 				alert("Pinos - A macOS-like web application");
-				setActiveMenu(null);
+				setActiveNavMenu(null);
 			},
 		},
 		{ type: "separator" },
@@ -30,7 +30,7 @@ export const submenu = ({ setActiveMenu }) => ({
 			label: "Log Out User...",
 			action: () => {
 				alert("Log Out");
-				setActiveMenu(null);
+				setActiveNavMenu(null);
 			},
 		},
 	],
@@ -40,7 +40,7 @@ export const submenu = ({ setActiveMenu }) => ({
 			label: "Close Window",
 			shortcut: "⌘W",
 			action: () => {
-				setActiveMenu(null);
+				setActiveNavMenu(null);
 				window.close();
 			},
 		},
@@ -50,7 +50,7 @@ export const submenu = ({ setActiveMenu }) => ({
 			shortcut: "⌘P",
 			action: () => {
 				window.print();
-				setActiveMenu(null);
+				setActiveNavMenu(null);
 			},
 		},
 	],
@@ -62,21 +62,8 @@ export const submenu = ({ setActiveMenu }) => ({
 		{ label: "Paste", shortcut: "⌘V", action: () => {} },
 	],
 	view: [
-		{
-			label: "Show All Windows",
-			shortcut: "F3",
-			action: () => {
-				setActiveMenu(null);
-			},
-		},
-		{
-			label: "Minimize All",
-			shortcut: "⌘M",
-			action: () => {
-				setActiveMenu(null);
-			},
-		},
-		{ type: "separator" },
+		{ label: "Zoom In", shortcut: "⌘+", action: () => {} },
+		{ label: "Zoom Out", shortcut: "⌘-", action: () => {} },
 		{
 			label: "Enter Full Screen",
 			shortcut: "⌃⌘F",
@@ -86,7 +73,23 @@ export const submenu = ({ setActiveMenu }) => ({
 				} else {
 					document.exitFullscreen();
 				}
-				setActiveMenu(null);
+				setActiveNavMenu(null);
+			},
+		},
+	],
+	window: [
+		{
+			label: "Show All Windows",
+			shortcut: "F3",
+			action: () => {
+				setActiveNavMenu(null);
+			},
+		},
+		{
+			label: "Minimize All",
+			shortcut: "⌘M",
+			action: () => {
+				setActiveNavMenu(null);
 			},
 		},
 	],
@@ -101,3 +104,30 @@ export const navIcons = [
 ];
 
 export const modeIcon = (isDarkMode) => ({ alt: isDarkMode ? "Toggle Light Mode" : "Toggle Dark Mode", icon: isDarkMode ? Sun : Moon });
+
+// Apps for Dock
+import { User, FolderOpen, Award, Mail } from "lucide-react";
+export const apps = [
+	{ id: "about", icon: User, color: "text-orange-400", label: "About Me" },
+	{ id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
+	{ id: "skills", icon: Award, color: "text-pink-400", label: "Skills" },
+	{ id: "contact", icon: Mail, color: "text-purple-400", label: "Contact" },
+];
+
+export const tooltipStyle = {
+	padding: "0.25rem 0.5rem",
+	fontSize: "0.75rem",
+	borderRadius: "0.25rem",
+	backgroundColor: "var(--color-background)",
+	color: "var(--color-foreground)",
+	"--tw-ring-color": "var(--ring)",
+	"--tw-ring-shadow": "var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor)",
+};
+
+// export const apps = [
+// 	{ id: "about", icon: '/images/finder.png', label: "About Me" },
+// 	{ id: "projects", icon: '/images/folder.png', label: "Projects" },
+// 	{ id: "skills", icon: '/images/terminal.png', label: "Skills" },
+// 	{ id: "contact", icon: '/images/safari.png', label: "Contact" },
+// 	{ id: "trash", icon: '/images/trash.png', label: "Trash" },
+// ];
