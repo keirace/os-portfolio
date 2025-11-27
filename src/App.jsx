@@ -1,39 +1,40 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Navbar from "@components/Navbar";
 import Dock from "@components/Dock";
+import About from "@components/About";
+import gsap from "gsap";
+import { Draggable } from "gsap/Draggable";
+
+gsap.registerPlugin(Draggable);
 
 function App() {
-	const [isDarkMode, setIsDarkMode] = useState(false);
-  const [activeMenu, setActiveMenu] = useState("portfolio");
+	const [isDarkMode, setIsDarkMode] = useState(window.matchMedia("(prefers-color-scheme: dark)").matches);
+	const [activeMenu, setActiveMenu] = useState("portfolio");
+  const colorSchemeMedia = useMemo(() => window.matchMedia("(prefers-color-scheme: dark)"), []);
 
 	// Detect system color scheme preference on initial load and on changes
 	useEffect(() => {
-		const matchMedia = window.matchMedia("(prefers-color-scheme: dark)");
-
 		const handleChange = (e) => {
 			setIsDarkMode(e.matches);
 		};
 
-		matchMedia.addEventListener("change", handleChange);
+		colorSchemeMedia.addEventListener("change", handleChange);
 
 		return () => {
-			matchMedia.removeEventListener("change", handleChange);
+			colorSchemeMedia.removeEventListener("change", handleChange);
 		};
-	}, [setIsDarkMode]);
+	}, [colorSchemeMedia]);
 
-	// Apply or remove dark mode class based on isDarkMode state
+	// 
 	useEffect(() => {
-		if (isDarkMode) {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}
+		document.documentElement.classList.toggle("dark", isDarkMode);
 	}, [isDarkMode]);
 
 	return (
 		<main>
 			<Navbar mode={isDarkMode} setIsDarkMode={setIsDarkMode} activeMenu={activeMenu} />
+			<About />
 			<Dock activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
 		</main>
 	);

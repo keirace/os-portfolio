@@ -1,11 +1,24 @@
 import { apps, tooltipStyle } from "@constants";
 import { useGSAP } from "@gsap/react";
-import { useRef, createElement } from "react";
+import { useRef, createElement, useEffect } from "react";
 import { gsap } from "gsap";
 import { Tooltip } from "react-tooltip";
+import useWindowsStore from "@store/window";
 
 const Dock = ({ activeMenu, setActiveMenu }) => {
+	const { openWindow, setDockIconPosition, windows } = useWindowsStore();
 	const dockRef = useRef(null);
+
+    useEffect(() => {
+        // Set initial icon positions
+        const icons = dockRef.current.querySelectorAll(".dock-icon");
+        icons.forEach((icon) => {
+            const rect = icon.getBoundingClientRect();
+            const position = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+            const id = icon.getAttribute("id")
+            setDockIconPosition(id, position);
+        });
+    }, [setDockIconPosition]);
 
 	useGSAP(() => {
 		const icons = dockRef.current.querySelectorAll(".dock-icon");
@@ -16,7 +29,7 @@ const Dock = ({ activeMenu, setActiveMenu }) => {
 				const iconRect = icon.getBoundingClientRect();
 				const iconCenter = iconRect.left + iconRect.width / 2 - left; // Center of the icon
 				const distance = Math.abs(mouseX - iconCenter); // Distance from mouse to icon center
-				const scale = Math.max(0, 1 - distance / 120); // Scale based on distance (adjust 150 for effect range)
+				const scale = Math.max(0, 1 - distance / 120); // Scale based on distance
 
 				gsap.to(icon, { scale: 1 + 0.25 * scale, y: -20 * scale, duration: 0.3, ease: "power1.out" });
 			});
@@ -40,6 +53,17 @@ const Dock = ({ activeMenu, setActiveMenu }) => {
 			dockRef.current.removeEventListener("mouseleave", resetIcons);
 		};
 	}, []);
+
+	const toggleWindow = ({ id, canOpen }) => {
+		if (!canOpen) return;
+		const window = windows[id];
+		if (window.isOpen && !window.isMinimized) {
+			return;
+		}
+		openWindow(id);
+		setActiveMenu(id);
+	};
+
 	return (
 		<section id="dock" ref={dockRef}>
 			<div className="dock-container">
@@ -48,9 +72,10 @@ const Dock = ({ activeMenu, setActiveMenu }) => {
 					return (
 						<button
 							key={id}
+                            id={id}
 							aria-label={label}
 							className={`group dock-icon bg-white ${isActive ? "shadow-lg active:bg-muted-foreground" : "shadow-md active:bg-muted-foreground"} `}
-							onClick={() => setActiveMenu(id)}
+							onClick={() => toggleWindow({ id, canOpen: true })}
 							data-tooltip-id={`tooltip-${id}`}
 							data-tooltip-content={label}
 							data-tooltip-place="top"
