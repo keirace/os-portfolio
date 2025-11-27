@@ -58,7 +58,7 @@
 	--popover: oklch(14.479% 0.00002 271.152 / 0.913);
 	--popover-foreground: oklch(0.985 0 0);
 	--primary: oklch(0.985 0 0);
-	--primary-foreground: oklch(0.205 0 0);
+	--primary-foreground: oklch(31.714% 0.00004 271.152);
 	--secondary: oklch(0.269 0 0);
 	--secondary-foreground: oklch(0.985 0 0);
 	--muted: oklch(0.269 0 0);
@@ -172,6 +172,7 @@
 html {
 	font-size: var(--font-size);
 	overflow: hidden;
+	cursor: url("/images/cursor.svg"), auto;
 }
 
 @utility flex-center {
@@ -187,7 +188,7 @@ html {
 }
 
 @utility glassmorphism {
-	@apply backdrop-blur-2xl border border-white/30 rounded-2xl shadow-2xl/50 ring ring-ring;
+	@apply backdrop-blur-lg border border-white/30 rounded-2xl shadow-2xl/50 ring ring-ring;
 }
 
 @layer base {
@@ -210,7 +211,7 @@ html {
 	}
 
 	nav {
-		@apply fixed left-0 top-0 z-50 w-full bg-white/30 dark:bg-black/20 backdrop-blur-xl px-5 select-none flex justify-between;
+		@apply fixed left-0 top-0 z-500 w-full bg-white/30 dark:bg-black/20 backdrop-blur-xl px-5 select-none flex justify-between;
 		div {
 			@apply flex-center;
 			ul {
@@ -229,7 +230,7 @@ html {
 		}
 
 		.dropdown-menu {
-			@apply absolute top-5 z-50 bg-popover/50 text-popover-foreground rounded-md mt-2 p-1 glassmorphism;
+			@apply absolute top-5 bg-primary-foreground/60 text-popover-foreground rounded-md mt-2 p-1 glassmorphism;
 			hr {
 				@apply my-1 border-t border-muted-foreground/40 w-11/12 mx-auto;
 			}
