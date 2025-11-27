@@ -95,8 +95,6 @@ export const submenu = ({ setActiveNavMenu }) => ({
 	],
 });
 
-export const appleIcon = { alt: "Apple", icon: Apple };
-
 export const navIcons = [
 	{ alt: "Wifi", icon: Wifi },
 	{ alt: "Battery", icon: Battery },
@@ -131,3 +129,42 @@ export const tooltipStyle = {
 // 	{ id: "contact", icon: '/images/safari.png', label: "Contact" },
 // 	{ id: "trash", icon: '/images/trash.png', label: "Trash" },
 // ];
+
+export const INITIAL_Z_INDEX = 1;
+
+// Window state configurations
+export const WINDOW_DEFAULTS = {
+	width: 600,
+	height: 400,
+	minWidth: 300,
+	minHeight: 200,
+	isOpen: false,
+	isMinimized: false,
+	isMaximized: false,
+	dockIconPosition: { x: 0, y: 0 },
+	position: { x: 100, y: 0 },
+	zIndex: 1,
+	data: null,
+};
+
+export const WINDOW_IDS = {
+	ABOUT: "about",
+	PROJECTS: "projects",
+	SKILLS: "skills",
+	CONTACT: "contact",
+};
+
+export const INITIAL_WINDOW_STATES = {
+	[WINDOW_IDS.ABOUT]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.PROJECTS]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.SKILLS]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.CONTACT]: {
+		...WINDOW_DEFAULTS,
+	},
+};
