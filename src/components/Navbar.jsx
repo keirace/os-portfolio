@@ -3,17 +3,22 @@ import { navMenus, navIcons, modeIcon, submenu } from "@constants";
 import { getDateTime } from "@utilities/navbar";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import useThemeStore from "@store/theme";
+import useWindowsStore from "@store/window";
 
 const getButtonContent = ({ label }) => {
 	return typeof label === "string" ? label : createElement(label, { className: "w-4 h-4" });
 };
 
-const Navbar = ({ mode, setIsDarkMode, activeMenu }) => {
+const Navbar = () => {
 	const menuRef = useRef(null);
 	const themeRef = useRef(null);
 	const [activeNavMenu, setActiveNavMenu] = useState(null);
 	const [dropdownXPosition, setDropdownXPosition] = useState(0);
 	const [currentDate, setCurrentDate] = useState(() => getDateTime());
+	const isDarkMode = useThemeStore((state) => state.isDarkMode);
+	const setIsDarkMode = useThemeStore((state) => state.setIsDarkMode);
+	const activeMenu = useWindowsStore((state) => state.activeMenu);
 
 	useEffect(() => {
 		// Update current date every minute
@@ -50,7 +55,7 @@ const Navbar = ({ mode, setIsDarkMode, activeMenu }) => {
 	// Animate theme icon on mode change
 	useGSAP(() => {
 		gsap.fromTo(themeRef.current, { opacity: 0, color: "var(--color-foreground)" }, { opacity: 1, color: "var(--color-foreground)", duration: 0.8 });
-	}, [mode]);
+	}, [isDarkMode]);
 
 	return (
 		<nav ref={menuRef}>
@@ -76,8 +81,8 @@ const Navbar = ({ mode, setIsDarkMode, activeMenu }) => {
 						</li>
 					))}
 					<li>
-						<button aria-label={modeIcon(mode).alt} onClick={() => setIsDarkMode(!mode)} ref={themeRef}>
-							{getButtonContent({ label: modeIcon(mode).icon })}
+						<button aria-label={modeIcon(isDarkMode ? "dark" : "light").alt} onClick={setIsDarkMode} ref={themeRef}>
+							{getButtonContent({ label: modeIcon(isDarkMode).icon })}
 						</button>
 					</li>
 				</ul>
