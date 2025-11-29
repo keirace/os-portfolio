@@ -5,8 +5,8 @@ import { gsap } from "gsap";
 import { Tooltip } from "react-tooltip";
 import useWindowsStore from "@store/window";
 
-const Dock = ({ activeMenu, setActiveMenu }) => {
-	const { openWindow, setDockIconPosition, windows } = useWindowsStore();
+const Dock = () => {
+	const { openWindow, setDockIconPosition, windows, activeMenu, focusWindow } = useWindowsStore();
 	const dockRef = useRef(null);
 
     useEffect(() => {
@@ -56,12 +56,12 @@ const Dock = ({ activeMenu, setActiveMenu }) => {
 
 	const toggleWindow = ({ id, canOpen }) => {
 		if (!canOpen) return;
+		focusWindow(id);
 		const window = windows[id];
 		if (window.isOpen && !window.isMinimized) {
 			return;
 		}
 		openWindow(id);
-		setActiveMenu(id);
 	};
 
 	return (
@@ -85,14 +85,14 @@ const Dock = ({ activeMenu, setActiveMenu }) => {
 						 	key={id}
 						 	aria-label={label}
 						 	className={`dock-icon `}
-						 	onClick={() => setActiveMenu(id)}
+						 	onClick={() => focusWindow(id)}
 						 	data-tooltip-id={`tooltip-${id}`}
 						 	data-tooltip-content={label}
 						 	data-tooltip-place="top"
 						 > */}
 							{/* <img src={Icon} alt={label} className="dock-icon" /> */}
 							<Tooltip id={`tooltip-${id}`} border="1px solid var(--border-white)" opacity={0.6} style={tooltipStyle} />
-							{isActive && <div className="dock-pointer" />}
+							{windows[id]?.isOpen && <div className="dock-pointer" />}
 						</button>
 					);
 				})}
