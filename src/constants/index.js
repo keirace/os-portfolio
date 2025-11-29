@@ -1,115 +1,13 @@
-import { Apple, Wifi, Battery, Volume2, Moon, Sun } from "lucide-react";
-
-export const navMenus = (activeMenu) => [
-	{ id: "apple", label: Apple, alt: "Apple Menu" },
-	{ id: activeMenu, label: activeMenu.charAt(0).toUpperCase() + activeMenu.slice(1) },
-	{ id: "file", label: "File" },
-	{ id: "edit", label: "Edit" },
-	{ id: "view", label: "View" },
-	{ id: "window", label: "Window" },
-	{ id: "help", label: "Help" },
-];
-
-export const submenu = ({ setActiveNavMenu }) => ({
-	apple: [
-		{
-			label: "About This App",
-			action: () => {
-				alert("Pinos - A macOS-like web application");
-				setActiveNavMenu(null);
-			},
-		},
-		{ type: "separator" },
-		{ label: "System Preferences...", action: () => alert("System Preferences") },
-		{ type: "separator" },
-		{ label: "Sleep", action: () => alert("Sleep") },
-		{ label: "Restart...", action: () => alert("Restart") },
-		{ label: "Shut Down...", action: () => alert("Shut Down") },
-		{ type: "separator" },
-		{
-			label: "Log Out User...",
-			action: () => {
-				alert("Log Out");
-				setActiveNavMenu(null);
-			},
-		},
-	],
-	file: [
-		{ label: "New Window", shortcut: "⌘N", action: () => alert("New window") },
-		{
-			label: "Close Window",
-			shortcut: "⌘W",
-			action: () => {
-				setActiveNavMenu(null);
-				window.close();
-			},
-		},
-		{ type: "separator" },
-		{
-			label: "Print",
-			shortcut: "⌘P",
-			action: () => {
-				window.print();
-				setActiveNavMenu(null);
-			},
-		},
-	],
-	edit: [
-		{ label: "Undo", shortcut: "⌘Z", action: () => {} },
-		{ label: "Redo", shortcut: "⌘⇧Z", action: () => {} },
-		{ type: "separator" },
-		{ label: "Copy", shortcut: "⌘C", action: () => {} },
-		{ label: "Paste", shortcut: "⌘V", action: () => {} },
-	],
-	view: [
-		{ label: "Zoom In", shortcut: "⌘+", action: () => {} },
-		{ label: "Zoom Out", shortcut: "⌘-", action: () => {} },
-		{
-			label: "Enter Full Screen",
-			shortcut: "⌃⌘F",
-			action: () => {
-				if (!document.fullscreenElement) {
-					document.documentElement.requestFullscreen();
-				} else {
-					document.exitFullscreen();
-				}
-				setActiveNavMenu(null);
-			},
-		},
-	],
-	window: [
-		{
-			label: "Show All Windows",
-			shortcut: "F3",
-			action: () => {
-				setActiveNavMenu(null);
-			},
-		},
-		{
-			label: "Minimize All",
-			shortcut: "⌘M",
-			action: () => {
-				setActiveNavMenu(null);
-			},
-		},
-	],
-});
-
-export const navIcons = [
-	{ alt: "Wifi", icon: Wifi },
-	{ alt: "Battery", icon: Battery },
-	{ alt: "Volume", icon: Volume2 },
-];
-
-export const modeIcon = (isDarkMode) => ({ alt: isDarkMode ? "Toggle Light Mode" : "Toggle Dark Mode", icon: isDarkMode ? Sun : Moon });
+export { navMenus, submenu, navIcons, modeIcon } from "./navbar";
 
 // Apps for Dock
-import { User, FolderOpen, Award, Mail } from "lucide-react";
+import { User, FolderOpen, Award, Mail, FileUser } from "lucide-react";
 export const apps = [
 	{ id: "about", icon: User, color: "text-orange-400", label: "About Me" },
 	{ id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
 	{ id: "skills", icon: Award, color: "text-pink-400", label: "Skills" },
 	{ id: "contact", icon: Mail, color: "text-purple-400", label: "Contact" },
+	{ id: "resume", icon: FileUser, color: "text-green-400", label: "Resume" },
 ];
 
 export const tooltipStyle = {
@@ -127,6 +25,7 @@ export const tooltipStyle = {
 // 	{ id: "projects", icon: '/images/folder.png', label: "Projects" },
 // 	{ id: "skills", icon: '/images/terminal.png', label: "Skills" },
 // 	{ id: "contact", icon: '/images/safari.png', label: "Contact" },
+// 	{ id: "resume", icon: '/images/pdf.png', label: "Resume" },
 // 	{ id: "trash", icon: '/images/trash.png', label: "Trash" },
 // ];
 
@@ -152,6 +51,7 @@ export const WINDOW_IDS = {
 	PROJECTS: "projects",
 	SKILLS: "skills",
 	CONTACT: "contact",
+	RESUME: "resume",
 };
 
 export const INITIAL_WINDOW_STATES = {
@@ -165,6 +65,9 @@ export const INITIAL_WINDOW_STATES = {
 		...WINDOW_DEFAULTS,
 	},
 	[WINDOW_IDS.CONTACT]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.RESUME]: {
 		...WINDOW_DEFAULTS,
 	},
 };
