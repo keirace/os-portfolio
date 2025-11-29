@@ -187,6 +187,28 @@ html {
 	@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
+@utility ew-resize {
+	cursor: ew-resize;
+}
+
+@utility ns-resize {
+	cursor: ns-resize;
+}
+
+@utility nswe-resize {
+	cursor: nswe-resize;
+}
+
+@utility nesw-resize {
+	cursor: nesw-resize;
+}
+
+.nwse-resize {
+	cursor: nwse-resize;
+	/* @apply cursor-[url("/images/Diagonal Resize 2.cur"), auto]; */
+	/* cursor: url('/images/Diagonal Resize 2.cur'), auto; */
+}
+
 @utility glassmorphism {
 	@apply backdrop-blur-lg border border-white/30 rounded-2xl shadow-2xl/50 ring ring-ring;
 }
@@ -230,9 +252,9 @@ html {
 		}
 
 		.dropdown-menu {
-			@apply absolute top-5 bg-primary-foreground/60 text-popover-foreground rounded-md mt-2 p-1 glassmorphism;
+			@apply absolute top-5 bg-primary-foreground/60 text-popover-foreground rounded-md mt-2 p-1 glassmorphism backdrop-blur-xl;
 			hr {
-				@apply my-1 border-t border-muted-foreground/40 w-11/12 mx-auto;
+				@apply my-1 border-t border-muted-foreground/40 w-11/12 mx-auto backdrop-blur-xl;
 			}
 			ul {
 				@apply flex flex-col items-start;
@@ -247,7 +269,7 @@ html {
 	}
 
 	#dock {
-		@apply fixed bottom-2 left-1/2 -translate-x-1/2 z-50 bg-transparent p-2;
+		@apply fixed bottom-2 left-1/2 -translate-x-1/2 z-500 bg-transparent p-2;
 
 		.dock-container {
 			@apply flex gap-4 bg-transparent px-3 py-2 glassmorphism;
