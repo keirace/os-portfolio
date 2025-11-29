@@ -136,14 +136,14 @@ export const INITIAL_Z_INDEX = 1;
 export const WINDOW_DEFAULTS = {
 	width: 600,
 	height: 400,
-	minWidth: 300,
-	minHeight: 200,
+	minWidth: 400,
+	minHeight: 300,
 	isOpen: false,
 	isMinimized: false,
 	isMaximized: false,
 	dockIconPosition: { x: 0, y: 0 },
-	position: { x: 100, y: 0 },
-	zIndex: 1,
+	position: { x: innerWidth / 2 - 300, y: innerHeight / 2 - 200 },
+	zIndex: INITIAL_Z_INDEX,
 	data: null,
 };
 
@@ -168,3 +168,22 @@ export const INITIAL_WINDOW_STATES = {
 		...WINDOW_DEFAULTS,
 	},
 };
+
+export const projects = [
+	{
+		title: "E-Commerce Platform",
+		description: "A full-stack e-commerce solution with real-time inventory management, payment processing, and analytics dashboard.",
+		image: "https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=400&fit=crop",
+		tech: ["React", "Node.js", "PostgreSQL", "Stripe"],
+		github: "#",
+		demo: "#",
+	},
+	{
+		title: "Task Management App",
+		description: "Collaborative task management tool with drag-and-drop interface, team workspaces, and real-time synchronization.",
+		image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop",
+		tech: ["TypeScript", "React", "Firebase", "Tailwind CSS"],
+		github: "#",
+		demo: "#",
+	},
+];
