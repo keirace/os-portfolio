@@ -7,7 +7,7 @@ const useWindowsStore = create(
 	immer((set) => ({
 		windows: INITIAL_WINDOW_STATES,
 		nextZIndex: INITIAL_Z_INDEX,
-
+		activeMenu: "portfolio",
 		setDockIconPosition: (id, position) => {
 			set((state) => {
 				const window = state.windows[id];
@@ -35,6 +35,7 @@ const useWindowsStore = create(
 					window.isOpen = false;
 					window.isMinimized = false;
 					window.data = data;
+					window.position = { x: innerWidth / 2 - window.width / 2, y: innerHeight / 2 - window.height / 2 };
 				}
 			});
 		},
@@ -64,6 +65,7 @@ const useWindowsStore = create(
 			set((state) => {
 				const window = state.windows[id];
 				if (window) {
+					state.activeMenu = id;
 					window.zIndex = state.nextZIndex;
 					state.nextZIndex += 1;
 				}
@@ -77,6 +79,15 @@ const useWindowsStore = create(
 				}
 			});
 		},
+		// resizeWindow: (id, size) => {
+		// 	set((state) => {
+		// 		const window = state.windows[id];
+		// 		if (window) {
+		// 			window.width = size.width;
+		// 			window.height = size.height;
+		// 		}
+		// 	});
+		// }
 	}))
 );
 
