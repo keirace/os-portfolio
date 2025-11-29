@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import WindowControls from "./WindowControls";
 
-const Window = ({ title, children }) => {
+const Window = ({ title, children, customizeTitleBar }) => {
 	// Store
 	const { windows, dragWindow, focusWindow } = useWindowsStore();
 	const window = windows[title];
@@ -163,15 +163,16 @@ const Window = ({ title, children }) => {
 	}, [resizeDir]);
 
 	return (
-		<div ref={windowRef} id={title} style={{ visibility: 'visible', zIndex: zIndex }} className={`absolute bg-primary-foreground rounded-xl flex flex-col overflow-hidden glassmorphism`}>
+		<div ref={windowRef} id={title} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute bg-primary-foreground rounded-xl flex flex-col overflow-hidden glassmorphism`}>
 			{/* Window Title Bar */}
-			<div ref={titleBarRef} className="h-8 border-b border-border flex items-center justify-between px-4 shrink-0">
+			<div ref={titleBarRef} className="h-8 border-b flex items-center justify-between px-4">
 				<WindowControls title={title} />
-				<div className="absolute left-1/2 -translate-x-1/2 text-secondary-foreground">{title}</div>
+				{customizeTitleBar ? customizeTitleBar : <div className="absolute left-1/2 -translate-x-1/2 text-secondary-foreground">{title}</div>
+				}
 			</div>
 
 			{/* Window Content */}
-			<div className="overflow-y-auto h-full">{children}</div>
+			<div className="overflow-y-auto h-full ">{children}</div>
 
 			{/* --- Resize Handles --- */}
 			<div className="absolute left-0 top-0 bottom-0 w-2 ew-resize" onMouseDown={(e) => handleResize(e, "w")} />
