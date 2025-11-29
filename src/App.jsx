@@ -1,41 +1,66 @@
 import "./App.css";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import Navbar from "@components/Navbar";
 import Dock from "@components/Dock";
 import About from "@components/About";
+import Resume from "@components/Resume";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
+import Projects from "@components/Projects";
+import BootingScreen from "@components/BootingScreen";
+import useSystemStore from "@store/system";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(Draggable);
 
 function App() {
-	const [isDarkMode, setIsDarkMode] = useState(window.matchMedia("(prefers-color-scheme: dark)").matches);
-	const [activeMenu, setActiveMenu] = useState("portfolio");
-  const colorSchemeMedia = useMemo(() => window.matchMedia("(prefers-color-scheme: dark)"), []);
+	const isDarkMode = useSystemStore((state) => state.isDarkMode);
+	const setIsDarkMode = useSystemStore((state) => state.setIsDarkMode);
+	const isBooting = useSystemStore((state) => state.isBooting);
 
-	// Detect system color scheme preference on initial load and on changes
+	const mediaQueryList = useMemo(() => window.matchMedia("(prefers-color-scheme: dark)"), []);
+
+	// Toggle dark mode based on system preference changes
 	useEffect(() => {
 		const handleChange = (e) => {
 			setIsDarkMode(e.matches);
 		};
-
-		colorSchemeMedia.addEventListener("change", handleChange);
+		mediaQueryList.addEventListener("change", handleChange);
 
 		return () => {
-			colorSchemeMedia.removeEventListener("change", handleChange);
+			mediaQueryList.removeEventListener("change", handleChange);
 		};
-	}, [colorSchemeMedia]);
+	}, [mediaQueryList, setIsDarkMode]);
 
-	// 
 	useEffect(() => {
 		document.documentElement.classList.toggle("dark", isDarkMode);
 	}, [isDarkMode]);
 
+	useGSAP(() => {
+		const tl = gsap.timeline({duration: 1, ease: "power2.out", stagger: 0.2});
+		tl.fromTo(
+			"nav",
+			{ opacity: 0 },
+			{ opacity: 1},
+		);
+		tl.fromTo(
+			"#dock",
+			{ opacity: 0 },
+			{ opacity: 1 },
+		);
+	}, [isBooting]);
+
+	if (isBooting) {
+		return <BootingScreen />;
+	}
+
 	return (
 		<main>
-			<Navbar mode={isDarkMode} setIsDarkMode={setIsDarkMode} activeMenu={activeMenu} />
+			<Navbar />
 			<About />
-			<Dock activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+			<Projects />
+			<Dock />
+			<Resume />
 		</main>
 	);
 }

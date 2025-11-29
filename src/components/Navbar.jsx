@@ -3,7 +3,7 @@ import { navMenus, navIcons, modeIcon, submenu } from "@constants";
 import { getDateTime } from "@utilities/navbar";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import useThemeStore from "@store/theme";
+import useSystemStore from "@store/system";
 import useWindowsStore from "@store/window";
 
 const getButtonContent = ({ label }) => {
@@ -16,8 +16,8 @@ const Navbar = () => {
 	const [activeNavMenu, setActiveNavMenu] = useState(null);
 	const [dropdownXPosition, setDropdownXPosition] = useState(0);
 	const [currentDate, setCurrentDate] = useState(() => getDateTime());
-	const isDarkMode = useThemeStore((state) => state.isDarkMode);
-	const setIsDarkMode = useThemeStore((state) => state.setIsDarkMode);
+	const isDarkMode = useSystemStore((state) => state.isDarkMode);
+	const setIsDarkMode = useSystemStore((state) => state.setIsDarkMode);
 	const activeMenu = useWindowsStore((state) => state.activeMenu);
 
 	useEffect(() => {

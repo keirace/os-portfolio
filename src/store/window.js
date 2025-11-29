@@ -79,15 +79,16 @@ const useWindowsStore = create(
 				}
 			});
 		},
-		// resizeWindow: (id, size) => {
-		// 	set((state) => {
-		// 		const window = state.windows[id];
-		// 		if (window) {
-		// 			window.width = size.width;
-		// 			window.height = size.height;
-		// 		}
-		// 	});
-		// }
+		closeAllWindows: () => {
+			set((state) => {
+				if (state.windows === null) return;
+				for (const id in state.windows) {
+					state.windows[id].isOpen = false;
+					state.windows[id].isMinimized = false;
+					state.windows[id].position = { x: innerWidth / 2 - state.windows[id].width / 2, y: innerHeight / 2 - state.windows[id].height / 2 };
+				}
+			});
+		}
 	}))
 );
 
