@@ -3,7 +3,7 @@ import Window from "./Window";
 
 const About = () => {
 	return (
-		<div className="p-8  min-h-0">
+		<div className="p-8  min-h-0 mb-8">
 			<div className="flex flex-col md:flex-row gap-8 items-start">
 				<div className="shrink-0"></div>
 
