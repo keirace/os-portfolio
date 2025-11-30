@@ -285,4 +285,54 @@ html {
 			}
 		}
 	}
+
+	.resume {
+		&.title-bar {
+			@apply flex items-center justify-between w-full px-3 text-muted-foreground;
+			div {
+				@apply pl-3 flex items-center;
+				&:last-child {
+					@apply flex;
+				}
+				&:nth-child(3) {
+					@apply gap-2 flex-1 max-w-lg;
+				}
+				svg {
+					@apply w-6 h-6 stroke-2 m-2 hover:bg-muted hover:rounded-sm;
+				}
+				input {
+					@apply rounded-sm px-2 py-1 text-sm focus:outline-none focus:border-accent;
+				}
+			}
+		}
+	}
+
+	#desktop {
+		@apply w-full h-full relative font-medium;
+		#stickies {
+			@apply bg-yellow-200 absolute w-50 h-50 pb-4 shadow-lg;
+			#stickies-bar {
+				@apply mix-blend-multiply bg-yellow-200 w-full h-3 top-0 flex justify-between items-center px-2;
+				svg {
+					@apply w-2 h-2 text-yellow-600;
+				}
+			}
+			.textarea {
+				@apply text-black text-sm w-full h-full text-wrap p-4 focus:outline-none overflow-scroll;
+			}
+		}
+
+		.icons {
+			@apply fixed select-none flex flex-col items-center w-24 outline-none;
+			.icon {
+				@apply w-18 h-18 mb-1 flex justify-center items-center border-muted-foreground/60 rounded-md group-focus:bg-black/10 group-focus:border-2;
+				img {
+					@apply w-16 h-16 object-contain drop-shadow-2xl pointer-events-none;
+				}
+			}
+			p {
+				@apply px-1 rounded-sm text-white drop-shadow-md drop-shadow-black/70 text-sm font-medium group-focus:bg-accent group-focus:drop-shadow-none;
+			}
+		}
+	}
 }

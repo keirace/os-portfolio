@@ -10,6 +10,7 @@ import Projects from "@components/Projects";
 import BootingScreen from "@components/BootingScreen";
 import useSystemStore from "@store/system";
 import { useGSAP } from "@gsap/react";
+import Desktop from "@components/Desktop";
 
 gsap.registerPlugin(Draggable);
 
@@ -37,6 +38,8 @@ function App() {
 	}, [isDarkMode]);
 
 	useGSAP(() => {
+		if (isBooting) return;
+		
 		const tl = gsap.timeline({duration: 1, ease: "power2.out", stagger: 0.2});
 		tl.fromTo(
 			"nav",
@@ -61,6 +64,7 @@ function App() {
 			<Projects />
 			<Dock />
 			<Resume />
+			<Desktop />
 		</main>
 	);
 }
