@@ -79,6 +79,15 @@ const useWindowsStore = create(
 				}
 			});
 		},
+		resizeWindow: (id, size) => {
+			set((state) => {
+				const window = state.windows[id];
+				if (window) {
+					window.width = size.width;
+					window.height = size.height;
+				}
+			});
+		},
 		closeAllWindows: () => {
 			set((state) => {
 				if (state.windows === null) return;

@@ -6,7 +6,7 @@ const WindowControls = ({ title }) => {
     const { closeWindow, minimizeWindow, maximizeWindow } = useWindowsStore();
 
 	return (
-		<div className="flex items-center gap-2">
+		<div className="flex items-center gap-2 group">
 			{/* Close */}
 			<button onClick={() => closeWindow(title)} className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors group" title="Close">
 				<X className="w-2 h-2 text-red-900 opacity-0 group-hover:opacity-100 mx-auto" />

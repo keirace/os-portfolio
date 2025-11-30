@@ -7,7 +7,7 @@ import WindowControls from "./WindowControls";
 
 const Window = ({ title, children, customizeTitleBar }) => {
 	// Store
-	const { windows, dragWindow, focusWindow } = useWindowsStore();
+	const { windows, dragWindow, focusWindow, resizeWindow } = useWindowsStore();
 	const window = windows[title];
 	const { height, width, isOpen, position, isMinimized, isMaximized, dockIconPosition, zIndex, minWidth, minHeight } = window;
 
@@ -141,6 +141,7 @@ const Window = ({ title, children, customizeTitleBar }) => {
 			}
 
 			gsap.set(windowRef.current, { width: newWidth, height: newHeight, ...(updatePosition && { x: newX, y: newY }) });
+			resizeWindow(title, { width: newWidth, height: newHeight });
 
 			// Sync draggable position
 			if (updatePosition) {
@@ -165,7 +166,7 @@ const Window = ({ title, children, customizeTitleBar }) => {
 	return (
 		<div ref={windowRef} id={title} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute bg-primary-foreground rounded-xl flex flex-col overflow-hidden glassmorphism`}>
 			{/* Window Title Bar */}
-			<div ref={titleBarRef} className="h-8 border-b flex items-center justify-between px-4">
+			<div ref={titleBarRef} className="border-b flex items-center justify-between px-4 relative py-2">
 				<WindowControls title={title} />
 				{customizeTitleBar ? customizeTitleBar : <div className="absolute left-1/2 -translate-x-1/2 text-secondary-foreground">{title}</div>
 				}
