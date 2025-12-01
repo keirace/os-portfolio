@@ -68,7 +68,7 @@ const WeatherWidget = ({ style }) => {
 	};
 
 	return (
-		<div ref={widgetRef} className={`draggable ${bgClass} ${style} text-medium select-none rounded-3xl w-42 h-42 flex flex-col justify-between p-4 gap-5 shadow-lg`}>
+		<div ref={widgetRef} className={`${bgClass} ${style} text-white font-semibold select-none rounded-3xl w-42 h-42 flex flex-col justify-between p-4 gap-5 shadow-lg`}>
 			{loading ? (
 				<div className="h-full flex justify-center items-center">
 					<p className="text-foreground text-md">Loading...</p>
@@ -77,9 +77,9 @@ const WeatherWidget = ({ style }) => {
 				<>
 					<div className="flex flex-col justify-start items-start gap-1 leading-4">
 						<span className="inline-flex items-center text-md">
-							Boston <Navigation fill={isNight ? "white" : "black"} className="w-3 h-3 ml-1" />
+							Boston <Navigation fill="white" className="w-3 h-3 ml-1" />
 						</span>
-						<p className="text-4xl font-medium">{toInt(current?.temperature_2m)}°</p>
+						<p className="text-4xl">{toInt(current?.temperature_2m)}°</p>
 					</div>
 					<div className="flex flex-col text-sm leading-4 gap-1">
 						<img src={`https://maps.gstatic.com/weather/v1/${WMO_CODES[current?.weather_code]}${isNight ? "_dark" : ""}.svg`} alt="weather icon" className="w-4 h-4" />
