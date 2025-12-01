@@ -2,13 +2,17 @@ export { navMenus, submenu, navIcons, modeIcon } from "./navbar";
 
 // Apps for Dock
 import { User, FolderOpen, Award, Mail, FileUser } from "lucide-react";
-export const apps = [
-	{ id: "about", icon: User, color: "text-orange-400", label: "About Me" },
-	{ id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
-	{ id: "skills", icon: Award, color: "text-pink-400", label: "Skills" },
-	{ id: "contact", icon: Mail, color: "text-purple-400", label: "Contact" },
-	{ id: "resume", icon: FileUser, color: "text-green-400", label: "Resume" },
-];
+export const apps = {
+	finder: { id: "finder", icon: '/images/finder.png', label: "Finder" },
+	terminal: { id: "terminal", icon: '/images/terminal.png', label: "Terminal" },
+	about: { id: "about", icon: User, color: "text-orange-400", label: "About Me" },
+	projects: { id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
+	skills: { id: "skills", icon: Award, color: "text-pink-400", label: "Skills" },
+	contact: { id: "contact", icon: Mail, color: "text-purple-400", label: "Contact" },
+	browser: { id: "browser", icon: '/images/safari.png', label: "Browser" },
+	resume: { id: "resume", icon: '/images/preview.png', label: "Preview", hidden: true },
+	trash: { id: "trash", icon: '/images/trash.png', label: "Trash" },
+};
 
 export const tooltipStyle = {
 	padding: "0.25rem 0.5rem",
@@ -19,15 +23,6 @@ export const tooltipStyle = {
 	"--tw-ring-color": "var(--ring)",
 	"--tw-ring-shadow": "var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor)",
 };
-
-// export const apps = [
-// 	{ id: "about", icon: '/images/finder.png', label: "About Me" },
-// 	{ id: "projects", icon: '/images/folder.png', label: "Projects" },
-// 	{ id: "skills", icon: '/images/terminal.png', label: "Skills" },
-// 	{ id: "contact", icon: '/images/safari.png', label: "Contact" },
-// 	{ id: "resume", icon: '/images/pdf.png', label: "Resume" },
-// 	{ id: "trash", icon: '/images/trash.png', label: "Trash" },
-// ];
 
 export const INITIAL_Z_INDEX = 1;
 
@@ -52,6 +47,7 @@ export const WINDOW_IDS = {
 	SKILLS: "skills",
 	CONTACT: "contact",
 	RESUME: "resume",
+	TERMINAL: "terminal",
 };
 
 export const INITIAL_WINDOW_STATES = {
@@ -68,6 +64,9 @@ export const INITIAL_WINDOW_STATES = {
 		...WINDOW_DEFAULTS,
 	},
 	[WINDOW_IDS.RESUME]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.TERMINAL]: {
 		...WINDOW_DEFAULTS,
 	},
 };
@@ -138,7 +137,7 @@ export const MOCK_WEATHER_DATA = {
 	timezone_abbreviation: "GMT-5",
 	elevation: 9.0,
 	current_units: { time: "iso8601", interval: "seconds", temperature_2m: "°C", weather_code: "wmo code" },
-	current: { time: "2025-11-29T16:45", interval: 900, temperature_2m: 2.1, weather_code: 0 },
+	current: { time: "2025-11-29T16:45", interval: 900, temperature_2m: 2.1, weather_code: 0, is_day: 1 },
 	daily_units: { time: "iso8601", temperature_2m_max: "°C", temperature_2m_min: "°C" },
 	daily: { time: ["2025-11-29"], temperature_2m_max: [5.9], temperature_2m_min: [-3.2] },
 };
