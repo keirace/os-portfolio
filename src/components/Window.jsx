@@ -32,8 +32,8 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			type: "x,y",
 			cursor: "default",
 			onRelease() {
-				focusWindow(title);
-				dragWindow(title, { x: this.x, y: this.y });
+				focusWindow(id);
+				dragWindow(id, { x: this.x, y: this.y });
 			},
 		});
 
@@ -104,7 +104,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 		// Get current GSAP size and position
 		startSize.current = { width: windowRef.current.offsetWidth, height: windowRef.current.offsetHeight, x: position.x, y: position.y };
 
-		focusWindow(title);
+		focusWindow(id);
 	};
 
 	useEffect(() => {
@@ -138,12 +138,12 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			}
 
 			gsap.set(windowRef.current, { width: newWidth, height: newHeight, ...(updatePosition && { x: newX, y: newY }) });
-			resizeWindow(title, { width: newWidth, height: newHeight });
+			resizeWindow(id, { width: newWidth, height: newHeight });
 
 			// Sync draggable position
 			if (updatePosition) {
 				draggableRef.current.update();
-				dragWindow(title, { x: newX, y: newY });
+				dragWindow(id, { x: newX, y: newY });
 			}
 		};
 
@@ -163,11 +163,17 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 	return (
 		<div ref={windowRef} id={id} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute rounded-xl flex flex-col overflow-hidden glassmorphism`}>
 			{/* Window Title Bar */}
-			<div ref={titleBarRef} className="shrink-0 border-b flex items-center justify-between px-4 py-1 bg-primary-foreground">
-				<WindowControls title={id} />
-				{customizeTitleBar ? customizeTitleBar : <div className="text-center grow text-secondary-foreground -ml-7">{title}</div>}
+			<div ref={titleBarRef}>
+				{customizeTitleBar ? (
+					customizeTitleBar
+				) : (
+					<div className="title-bar-container">
+						<WindowControls title={id} />
+						<div className="text-center grow text-secondary-foreground -ml-7 text-sm font-medium">{title}</div>
+					</div>
+				)}
 			</div>
-
+			
 			{/* Window Content */}
 			<div className="grow overflow-y-auto h-full">{children}</div>
 
