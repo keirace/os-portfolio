@@ -1,21 +1,27 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, startTransition } from "react";
 import Window from "./Window.jsx";
 import { getDateTime } from "@utilities/navbar.js";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { WINDOW_IDS } from "@constants";
+import useWindowsStore from "@store/window";
 
 const user = "user";
 const host = "pinos";
 
+const getInitialHistory = () => {
+    return [
+        { type: "response", content: `Last login: ${getDateTime()} on ttys021` },
+        { type: "response", content: "Welcome to PinOS Terminal!" },
+        { type: "response", content: "Type 'help' to get started." },
+    ];
+};
+
 const Terminal = () => {
+    const isOpen = useWindowsStore((state) => state.windows[WINDOW_IDS.TERMINAL].isOpen);
+
 	const prompt = `${user}@${host} ~ % `;
-	const dateTime = getDateTime();
-	const [history, setHistory] = useState([
-		{ type: "response", content: `Last login: ${dateTime} on ttys021` },
-		{ type: "response", content: "Welcome to PinOS Terminal!" },
-		{ type: "response", content: "Type 'help' to get started." },
-	]);
+	const [history, setHistory] = useState(getInitialHistory());
 	const [input, setInput] = useState("");
 	const inputRef = useRef(null);
 	const terminalRef = useRef(null);
@@ -65,24 +71,26 @@ const Terminal = () => {
 	};
 
 	useEffect(() => {
+		if (!isOpen) {
+			// schedule state updates as a non-urgent transition to avoid cascading renders
+			startTransition(() => {
+				setHistory(getInitialHistory());
+				setInput("");
+			});
+		}
+	}, [isOpen]);
+
+	useEffect(() => {
 		// Scroll to the bottom of the terminal on history update
 		if (terminalRef.current) terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
 	}, [history]);
 
     useGSAP(() => {
-        const historyElements = gsap.utils.toArray(".history");
-        historyElements.forEach((el, index) => {
-            gsap.fromTo(
-                el,
-                { opacity: 0 },
-                { opacity: 1, ease: "elastic", delay: index * 0.1 }
-            );
-        });
-        // gsap.fromTo(
-        //     '.history',
-        //     { opacity: 0},
-        //     { opacity: 1, stagger: 0.3, ease: "elastic", delay: 0.5 }
-        // );
+        gsap.fromTo(
+            ".history",
+            { opacity: 0 },
+            { opacity: 1, stagger: 0.3, ease: "elastic", delay: 0.5 }
+        );
     }, []);
 
 	return (
@@ -90,7 +98,7 @@ const Terminal = () => {
 			<div className="terminal-output flex flex-col">
 				{history.map((cmd, index) => (
 					<div key={index} className="history mb-1 whitespace-pre-wrap">
-						{index !== 0 && cmd.type === "command" && <span>{prompt}</span>}
+						{cmd.type === "command" && <span>{prompt}</span>}
 						{cmd.content}
 					</div>
 				))}
