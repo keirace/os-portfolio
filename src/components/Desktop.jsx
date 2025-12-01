@@ -2,12 +2,25 @@ import useWindowsStore from "@store/window";
 import WeatherWidget from "./WeatherWidget";
 import Stickies from "./Stickies";
 import DesktopIcon from "./FileIcon";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
+import { WINDOW_IDS } from "@constants";
 
 const Desktop = () => {
 	const { openWindow } = useWindowsStore();
+	const desktopRef = useRef(null);
+
+	useGSAP(() => {
+		gsap.fromTo(
+			desktopRef.current,
+			{ opacity: 0 },
+			{ opacity: 1, duration: 3.5, ease: "power2.out" }
+		);
+	}, []);
 
 	return (
-		<div id="desktop">
+		<div id="desktop" ref={desktopRef}>
 			<WeatherWidget style="absolute top-10 right-5" />
 			<Stickies className="top-40 left-10">
 				<p>
@@ -16,7 +29,7 @@ const Desktop = () => {
 			</Stickies>
 
 			{/* Desktop Icons */}
-			<DesktopIcon label="resume.pdf" icon="/images/resume.png" position="bottom-30 right-10" onDoubleClick={() => openWindow("resume")} />
+			<DesktopIcon label="resume.pdf" icon="/images/resume.png" position="bottom-30 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.RESUME)} />
 		</div>
 	);
 };
