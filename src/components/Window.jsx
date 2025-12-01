@@ -5,10 +5,10 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import WindowControls from "./WindowControls";
 
-const Window = ({ title, children, customizeTitleBar }) => {
+const Window = ({ id, title, children, customizeTitleBar }) => {
 	// Store
 	const { windows, dragWindow, focusWindow, resizeWindow } = useWindowsStore();
-	const window = windows[title];
+	const window = windows[id];
 	const { height, width, isOpen, position, isMinimized, isMaximized, dockIconPosition, zIndex, minWidth, minHeight } = window;
 
 	// Refs
@@ -113,10 +113,7 @@ const Window = ({ title, children, customizeTitleBar }) => {
 			const dx = e.clientX - startPos.current.x;
 			const dy = e.clientY - startPos.current.y;
 
-			let newWidth = startSize.current.width;
-			let newHeight = startSize.current.height;
-			let newX = startSize.current.x;
-			let newY = startSize.current.y;
+			let { newWidth, newHeight, newX, newY } = startSize.current;
 			let updatePosition = false;
 
 			if (resizeDir.includes("e")) {
@@ -164,16 +161,15 @@ const Window = ({ title, children, customizeTitleBar }) => {
 	}, [resizeDir]);
 
 	return (
-		<div ref={windowRef} id={title} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute bg-primary-foreground rounded-xl flex flex-col overflow-hidden glassmorphism`}>
+		<div ref={windowRef} id={id} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute rounded-xl flex flex-col overflow-hidden glassmorphism`}>
 			{/* Window Title Bar */}
-			<div ref={titleBarRef} className="border-b flex items-center justify-between px-4 relative py-2">
-				<WindowControls title={title} />
-				{customizeTitleBar ? customizeTitleBar : <div className="absolute left-1/2 -translate-x-1/2 text-secondary-foreground">{title}</div>
-				}
+			<div ref={titleBarRef} className="shrink-0 border-b flex items-center justify-between px-4 py-1 bg-primary-foreground">
+				<WindowControls title={id} />
+				{customizeTitleBar ? customizeTitleBar : <div className="text-center grow text-secondary-foreground -ml-7">{title}</div>}
 			</div>
 
 			{/* Window Content */}
-			<div className="overflow-y-auto h-full ">{children}</div>
+			<div className="grow overflow-y-auto h-full">{children}</div>
 
 			{/* --- Resize Handles --- */}
 			<div className="absolute left-0 top-0 bottom-0 w-2 ew-resize" onMouseDown={(e) => handleResize(e, "w")} />
