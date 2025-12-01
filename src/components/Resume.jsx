@@ -1,66 +1,100 @@
 import { Document, pdfjs, Page } from "react-pdf";
 import Window from "./Window";
-import { CircleArrowDown, ChevronDown, ChevronLeft, ChevronRight, PanelLeftIcon, Plus, Expand, ChevronsRight } from "lucide-react";
+import { CircleArrowDown, ChevronDown, Share, PanelLeftIcon, ZoomIn, ZoomOut, Info, Search } from "lucide-react";
 import useWindowsStore from "@store/window";
 import { WINDOW_IDS, apps } from "@constants";
+import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch";
+import WindowControls from "./WindowControls";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
+const Controls = () => {
+	const { zoomIn, zoomOut } = useControls();
+
+	return (
+		<div>
+			<button onClick={() => zoomIn()}>
+				<ZoomIn />
+			</button>
+			<button onClick={() => zoomOut()}>
+				<ZoomOut />
+			</button>
+		</div>
+	);
+};
+
 const Resume = () => {
 	return (
-		<div className="resume">
-			<Document file="/files/Pin_Horputra_Resume.pdf" loading="Loading resume..." className="flex justify-center">
-				<Page pageNumber={1} width={600} renderTextLayer renderAnnotationLayer className="bg-black" />
-			</Document>
-		</div>
+		<TransformWrapper initialScale={1} initialPositionX={0} initialPositionY={0} wheel={{ wheelDisabled: true, step: 1, smoothStep: 0.01 }} panning={{ wheelPanning: true }}>
+			<div className="resume bg-secondary mb-8 flex justify-center">
+				<TransformComponent>
+					<Document file="/files/Pin_Horputra_Resume.pdf" loading="Loading resume..." className="flex justify-center">
+						<Page pageNumber={1} width={600} renderTextLayer renderAnnotationLayer className="bg-black" />
+					</Document>
+				</TransformComponent>
+			</div>
+		</TransformWrapper>
 	);
 };
 
 const TitleBar = () => {
-	const { windows } = useWindowsStore();
-	const window = windows["resume"];
-	const isMobile = window?.width <= 640;
+	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.RESUME]);
+	const isMobile = window?.width <= 768;
 
 	return (
-		<div className="resume title-bar">
-			<div>
-				<PanelLeftIcon />
-				<hr className="border-r border-secondary h-6" />
-				<ChevronDown className="w-4 h-4" />
-			</div>
-			<div>
-				<ChevronLeft />
-				<ChevronRight />
-			</div>
-			<div>
-				<input type="text" placeholder="Search or enter website name" className="w-20 bg-muted" />
-				<input type="text" placeholder="file:///Users/pin/Downloads/resume.pdf" className="flex-1 min-w-0 bg-background" />
-			</div>
-			{!isMobile && (
-				<div>
+		<div className="title-bar-container flex-col border-b">
+			<div className="resume title-bar flex items-start justify-between text-muted-foreground">
+				<div className="resume-group">
+				<WindowControls title={WINDOW_IDS.RESUME} />
+					<button className="ml-3 mr-1">
+						<PanelLeftIcon className="py-0 px-1 w-7 h-7"/>
+						<ChevronDown className="py-0 px-1 w-5 h-5"/>
+					</button>
+					<div className="flex flex-col items-start justify-center">
+						<h3 className="text-sm font-medium text-accent-foreground">resume.pdf</h3>
+						<p className="text-xs">1 page</p>
+					</div>
+				</div>
+				<div className="resume-group">
+					{/* <Controls /> */}
+					<button>
+						<Info />
+					</button>
+					<button>
+						<ZoomIn />
+					</button>
+					<button>
+						<ZoomOut />
+					</button>
+					<button>
+						<Share />
+					</button>
 					<a href="files/Pin_Horputra_Resume.pdf" download>
-						<CircleArrowDown className=" hover:bg-muted hover:rounded-sm" />
+						<CircleArrowDown />
 					</a>
-					<Plus />
+					{isMobile ? <button><Search /></button> : <input type="text" className="border border-muted-foreground/20" placeholder="Search" />}
 				</div>
-			)}
-			{isMobile && (
-				<div>
-					<ChevronsRight />
-				</div>
-			)}
+			</div>
+			<div className="resume-group text-center text-xs">resume.pdf</div>
 		</div>
 	);
 };
 
-const ResumeWindow = () =>
-	Window({
-		id: WINDOW_IDS.RESUME,
-		title: apps[WINDOW_IDS.RESUME].label,
-		children: <Resume />,
-		customizeTitleBar: <TitleBar />,
-	});
+const ResumeWindow = () => {
+	return (
+		// <TransformWrapper initialScale={1} initialPositionX={200} initialPositionY={100}>
+		// 	{({ zoomIn, zoomOut, ...rest }) => {
+		Window({
+			id: WINDOW_IDS.RESUME,
+			title: apps[WINDOW_IDS.RESUME].label,
+			children: <Resume />,
+			customizeTitleBar: <TitleBar />,
+		})
+		// 	}}
+		// </TransformWrapper>
+	);
+};
 
 export default ResumeWindow;
