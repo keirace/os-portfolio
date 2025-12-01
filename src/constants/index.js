@@ -3,15 +3,15 @@ export { navMenus, submenu, navIcons, modeIcon } from "./navbar";
 // Apps for Dock
 import { User, FolderOpen, Award, Mail, FileUser } from "lucide-react";
 export const apps = {
-	finder: { id: "finder", icon: '/images/finder.png', label: "Finder" },
-	terminal: { id: "terminal", icon: '/images/terminal.png', label: "Terminal" },
+	finder: { id: "finder", icon: "/images/finder.png", label: "Finder" },
+	terminal: { id: "terminal", icon: "/images/terminal.png", label: "Terminal" },
 	about: { id: "about", icon: User, color: "text-orange-400", label: "About Me" },
 	projects: { id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
 	skills: { id: "skills", icon: Award, color: "text-pink-400", label: "Skills" },
 	contact: { id: "contact", icon: Mail, color: "text-purple-400", label: "Contact" },
-	browser: { id: "browser", icon: '/images/safari.png', label: "Browser" },
-	resume: { id: "resume", icon: '/images/preview.png', label: "Preview", hidden: true },
-	trash: { id: "trash", icon: '/images/trash.png', label: "Trash" },
+	browser: { id: "browser", icon: "/images/safari.png", label: "Browser" },
+	resume: { id: "resume", icon: "/images/preview.png", label: "Preview", hidden: true },
+	trash: { id: "trash", icon: "/images/trash.png", label: "Trash" },
 };
 
 export const tooltipStyle = {
@@ -149,3 +149,75 @@ export const COORDINATES = {
 
 export const weather_apiURL = (lat, lon) =>
 	`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&current=weather_code,temperature_2m,is_day&timezone=auto`;
+
+
+// Skills and Timeline
+import { Code, Database, Cloud, Wrench } from "lucide-react";
+
+export const skillCategories = [
+	{
+		icon: Code,
+		title: "Frontend Development",
+		skills: [
+			{ name: "React / Next.js", level: 80 },
+			{ name: "TypeScript / JavaScript", level: 85 },
+			{ name: "Tailwind CSS", level: 70 },
+			{ name: "Three.js", level: 70 },
+		],
+	},
+	{
+		icon: Database,
+		title: "Backend Development",
+		skills: [
+			{ name: "Node.js / Express", level: 85 },
+			{ name: "REST APIs", level: 90 },
+			{ name: "Apex (Salesforce)", level: 85 },
+		],
+	},
+	{
+		icon: Cloud,
+		title: "Cloud & DevOps",
+		skills: [
+			{ name: "AWS", level: 80 },
+			{ name: "Docker", level: 70 },
+			{ name: "CI/CD", level: 80 },
+		],
+	},
+	{
+		icon: Wrench,
+		title: "Tools & Databases",
+		skills: [
+			{ name: "Git", level: 90 },
+			{ name: "PostgreSQL", level: 60 },
+			{ name: "MongoDB", level: 80 },
+			{ name: "MySQL", level: 80 },
+		],
+	},
+];
+
+export const timeline = [
+	{
+		role: "🎓 Master's Degree in Software Engineering",
+		company: "🏫 Northeastern University Boston",
+		duration: "📆 2023 - 2025",
+		description: "Pursuing advanced studies in software engineering with a focus on full-stack development, cloud computing, and modern software architectures.",
+	},
+	{
+		role: "💻 Software Engineer",
+		company: "🏢 Accenture Thailand",
+		duration: "📆 2021 - 2023",
+		description: "Developed and maintained Salesforce applications, collaborating with cross-functional teams to deliver high-quality solutions.",
+	},
+	{
+		role: "🛠️ Web Developer",
+		company: "🏢 THNIC Foundation",
+		duration: "📆 2021 - 2021",
+		description: "Built and optimized the foundation's website, enhancing user experience and implementing responsive design principles.",
+	},
+	{
+		role: "🎓 Bachelor's Degree in Computer Engineering",
+		company: "🏫 Thammasat University",
+		duration: "📆 2017 - 2021",
+		description: "Completed undergraduate studies in computer engineering, gaining a solid foundation in programming, algorithms, and system design.",
+	},
+];
