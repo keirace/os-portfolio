@@ -48,6 +48,7 @@ export const WINDOW_IDS = {
 	CONTACT: "contact",
 	RESUME: "resume",
 	TERMINAL: "terminal",
+	FINDER: "finder",
 };
 
 export const INITIAL_WINDOW_STATES = {
@@ -67,6 +68,9 @@ export const INITIAL_WINDOW_STATES = {
 		...WINDOW_DEFAULTS,
 	},
 	[WINDOW_IDS.TERMINAL]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.FINDER]: {
 		...WINDOW_DEFAULTS,
 	},
 };
