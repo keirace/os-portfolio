@@ -3,15 +3,24 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer base {
+	@font-face {
+		font-family: "SFMono";
+		src: url("/fonts/SFMono-Light.woff2") format("woff2"), url("/fonts/SFMono-Light.woff") format("woff");
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+}
+
 @theme {
-	--font-sf-pro: "SF Pro", sans-serif;
 	--font-georama: "Georama", sans-serif;
-	--font-roboto: "Roboto Mono", monospace;
+	--font-mono: SFMono, monospace;
 
 	--font-size: 16px;
 	--background: #ffffff;
 	--foreground: oklch(0.145 0 0);
-	--card: #ffffff;
+	--card: #e4e4e4;
 	--card-foreground: oklch(0.145 0 0);
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.145 0 0);
@@ -164,7 +173,7 @@
 		}
 
 		input {
-			@apply text-base font-normal leading-6;
+			@apply text-input text-base font-normal leading-6;
 		}
 	}
 }
@@ -210,7 +219,7 @@ html {
 }
 
 @utility glassmorphism {
-	@apply backdrop-blur-lg border border-white/30 rounded-2xl shadow-2xl/50 ring ring-ring;
+	@apply backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl/50 ring ring-ring;
 }
 
 @layer base {
@@ -219,7 +228,8 @@ html {
 	}
 
 	body {
-		@apply text-foreground font-sf-pro bg-cover bg-center bg-no-repeat bg-(image:--background-image) transition-all duration-1000 ease-in-out;
+		font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+		@apply text-foreground bg-cover bg-center bg-no-repeat bg-(image:--background-image) transition-all duration-1000 ease-in-out;
 	}
 
 	img {
@@ -233,31 +243,31 @@ html {
 	}
 
 	nav {
-		@apply fixed left-0 top-0 z-500 w-full bg-white/30 dark:bg-black/20 backdrop-blur-xl px-5 select-none flex justify-between;
-		div {
-			@apply flex-center;
-			ul {
+		@apply fixed left-0 top-0 z-500 w-full select-none;
+		.nav-container {
+			@apply flex justify-between w-full bg-white/30 dark:bg-black/20 backdrop-blur-xl px-5;
+
+			div {
 				@apply flex-center;
-				li {
+				ul {
 					@apply flex-center;
 				}
-			}
-			button,
-			p {
-				@apply relative py-1 px-2 text-sm text-nowrap;
-			}
-			button:focus {
-				@apply inset-0 rounded-sm bg-black/20 dark:bg-white/20 transition-colors;
+				button,
+				p {
+					@apply relative py-1 px-2 text-sm text-nowrap;
+				}
+				button:focus {
+					@apply inset-0 rounded-sm bg-black/20 dark:bg-white/20 transition-colors;
+				}
 			}
 		}
-
 		.dropdown-menu {
-			@apply absolute top-5 bg-primary-foreground/60 text-popover-foreground rounded-md mt-2 p-1 glassmorphism backdrop-blur-xl;
+			@apply absolute top-5;
 			hr {
-				@apply my-1 border-t border-muted-foreground/40 w-11/12 mx-auto backdrop-blur-xl;
+				@apply my-1 border-t border-muted-foreground/40 w-11/12 mx-auto;
 			}
 			ul {
-				@apply flex flex-col items-start;
+				@apply flex flex-col items-start bg-primary-foreground/60 text-popover-foreground rounded-md mt-2 p-1 glassmorphism;
 				li {
 					@apply text-sm py-0.5 px-4 hover:bg-accent rounded-sm hover:text-accent-foreground w-full flex justify-between;
 					button {
@@ -272,10 +282,10 @@ html {
 		@apply fixed bottom-2 left-1/2 -translate-x-1/2 z-500 bg-transparent p-2;
 
 		.dock-container {
-			@apply flex gap-4 bg-transparent px-3 py-2 glassmorphism;
+			@apply flex items-center gap-4 bg-transparent px-3 py-2 glassmorphism;
 
 			.dock-icon {
-				@apply w-14 h-14 rounded-xl flex items-center justify-center drop-shadow-sm;
+				@apply w-14 h-14 object-contain rounded-xl flex items-center justify-center drop-shadow-sm active:brightness-70;
 			}
 			.dock-pointer {
 				@apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent-foreground/70 rounded-full;
