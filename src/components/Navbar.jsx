@@ -20,8 +20,6 @@ const Navbar = () => {
 	const setIsDarkMode = useSystemStore((state) => state.setIsDarkMode);
 	const activeMenu = useWindowsStore((state) => state.activeMenu);
 	const activeMenuLabel = apps[activeMenu]?.label || "portfolio";
-	console.log(activeMenu, activeMenuLabel);
-
 
 	useEffect(() => {
 		// Update current date every minute
