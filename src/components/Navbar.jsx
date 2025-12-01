@@ -1,5 +1,5 @@
 import { useState, createElement, useEffect, useRef } from "react";
-import { navMenus, navIcons, modeIcon, submenu } from "@constants";
+import { navMenus, navIcons, modeIcon, submenu, apps } from "@constants";
 import { getDateTime } from "@utilities/navbar";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -19,6 +19,9 @@ const Navbar = () => {
 	const isDarkMode = useSystemStore((state) => state.isDarkMode);
 	const setIsDarkMode = useSystemStore((state) => state.setIsDarkMode);
 	const activeMenu = useWindowsStore((state) => state.activeMenu);
+	const activeMenuLabel = apps[activeMenu]?.label || "portfolio";
+	console.log(activeMenu, activeMenuLabel);
+
 
 	useEffect(() => {
 		// Update current date every minute
@@ -57,38 +60,43 @@ const Navbar = () => {
 		gsap.fromTo(themeRef.current, { opacity: 0, color: "var(--color-foreground)" }, { opacity: 1, color: "var(--color-foreground)", duration: 0.8 });
 	}, [isDarkMode]);
 
+	useGSAP(() => {
+		gsap.fromTo(menuRef.current, { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power2.out" });
+	}, []);
+
 	return (
 		<nav ref={menuRef}>
-			{/* Left menu */}
-			<div>
-				<ul>
-					{navMenus(activeMenu).map(({ id, label, alt }) => (
-						<li key={id}>
-							<button aria-label={alt ?? label} onClick={(e) => handleMenuClick(e, id)} className={`${activeMenu === id ? "font-medium" : "font-normal"}`}>
-								{getButtonContent({ label })}
+			<div className="nav-container">
+				{/* Left menu */}
+				<div>
+					<ul>
+						{navMenus(activeMenuLabel).map(({ id, label, alt }) => (
+							<li key={id}>
+								<button aria-label={alt ?? label} onClick={(e) => handleMenuClick(e, id)} className={`capitalize ${activeMenu === id ? "font-semibold" : "font-normal"}`}>
+									{getButtonContent({ label })}
+								</button>
+							</li>
+						))}
+					</ul>
+				</div>
+
+				{/* Right icons and date */}
+				<div>
+					<ul>
+						{navIcons.map(({ alt, icon }) => (
+							<li key={alt}>
+								<button aria-label={alt}>{getButtonContent({ label: icon })}</button>
+							</li>
+						))}
+						<li>
+							<button aria-label={modeIcon(isDarkMode ? "dark" : "light").alt} onClick={setIsDarkMode} ref={themeRef}>
+								{getButtonContent({ label: modeIcon(isDarkMode).icon })}
 							</button>
 						</li>
-					))}
-				</ul>
+					</ul>
+					<p>{currentDate}</p>
+				</div>
 			</div>
-
-			{/* Right icons and date */}
-			<div>
-				<ul>
-					{navIcons.map(({ alt, icon }) => (
-						<li key={alt}>
-							<button aria-label={alt}>{getButtonContent({ label: icon })}</button>
-						</li>
-					))}
-					<li>
-						<button aria-label={modeIcon(isDarkMode ? "dark" : "light").alt} onClick={setIsDarkMode} ref={themeRef}>
-							{getButtonContent({ label: modeIcon(isDarkMode).icon })}
-						</button>
-					</li>
-				</ul>
-				<p>{currentDate}</p>
-			</div>
-
 			{/* Dropdown menu */}
 			{activeMenu && submenu({})[activeNavMenu] && (
 				<div className="dropdown-menu" style={{ left: dropdownXPosition }}>

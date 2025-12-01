@@ -3,7 +3,7 @@ import useSystemStore from "@store/system";
 
 export const navMenus = (activeMenu) => [
 	{ id: "apple", label: Apple, alt: "Apple Menu" },
-	{ id: activeMenu, label: activeMenu.charAt(0).toUpperCase() + activeMenu.slice(1) },
+	{ id: activeMenu, label: activeMenu },
 	{ id: "file", label: "File" },
 	{ id: "edit", label: "Edit" },
 	{ id: "view", label: "View" },
