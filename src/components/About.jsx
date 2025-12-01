@@ -1,11 +1,14 @@
 import { MapPin, Briefcase, GraduationCap } from "lucide-react";
 import Window from "./Window";
+import { WINDOW_IDS, apps } from "@constants";
 
 const About = () => {
 	return (
-		<div className="p-8  min-h-0 mb-8">
+		<div className="p-8 min-h-0 mb-8 bg-primary-foreground">
 			<div className="flex flex-col md:flex-row gap-8 items-start">
-				<div className="shrink-0"></div>
+				<div className="shrink-0">
+					<img src="/images/photos.png" alt="Pinkaew Horputra" className="w-48 h-48 rounded-full object-cover" />
+				</div>
 
 				<div className="flex-1">
 					<h1 className="mb-2">Pinkaew Horputra</h1>
@@ -53,7 +56,8 @@ const About = () => {
 
 const AboutWindow = () =>
 	Window({
-		title: "about",
+		id: WINDOW_IDS.ABOUT,
+		title: apps[WINDOW_IDS.ABOUT].label,
 		children: <About />,
 	});
 

@@ -2,6 +2,7 @@ import { Document, pdfjs, Page } from "react-pdf";
 import Window from "./Window";
 import { CircleArrowDown, ChevronDown, ChevronLeft, ChevronRight, PanelLeftIcon, Plus, Expand, ChevronsRight } from "lucide-react";
 import useWindowsStore from "@store/window";
+import { WINDOW_IDS, apps } from "@constants";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -37,22 +38,27 @@ const TitleBar = () => {
 				<input type="text" placeholder="Search or enter website name" className="w-20 bg-muted" />
 				<input type="text" placeholder="file:///Users/pin/Downloads/resume.pdf" className="flex-1 min-w-0 bg-background" />
 			</div>
-			{!isMobile && <div>
-				<a href="files/Pin_Horputra_Resume.pdf" download>
-					<CircleArrowDown className=" hover:bg-muted hover:rounded-sm" />
-				</a>
-				<Plus />
-			</div>}
-			{isMobile && <div>
-				<ChevronsRight />
-			</div>}
+			{!isMobile && (
+				<div>
+					<a href="files/Pin_Horputra_Resume.pdf" download>
+						<CircleArrowDown className=" hover:bg-muted hover:rounded-sm" />
+					</a>
+					<Plus />
+				</div>
+			)}
+			{isMobile && (
+				<div>
+					<ChevronsRight />
+				</div>
+			)}
 		</div>
 	);
 };
 
 const ResumeWindow = () =>
 	Window({
-		title: "resume",
+		id: WINDOW_IDS.RESUME,
+		title: apps[WINDOW_IDS.RESUME].label,
 		children: <Resume />,
 		customizeTitleBar: <TitleBar />,
 	});
