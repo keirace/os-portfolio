@@ -9,8 +9,11 @@ import { Draggable } from "gsap/Draggable";
 import Projects from "@components/Projects";
 import BootingScreen from "@components/BootingScreen";
 import useSystemStore from "@store/system";
-import { useGSAP } from "@gsap/react";
 import Desktop from "@components/Desktop";
+import Skills from "@components/Skills";
+import Contact from "@components/Contact";
+import Terminal from "@components/Terminal";
+import Finder from "@components/Finder";
 
 gsap.registerPlugin(Draggable);
 
@@ -37,22 +40,6 @@ function App() {
 		document.documentElement.classList.toggle("dark", isDarkMode);
 	}, [isDarkMode]);
 
-	useGSAP(() => {
-		if (isBooting) return;
-		
-		const tl = gsap.timeline({duration: 1, ease: "power2.out", stagger: 0.2});
-		tl.fromTo(
-			"nav",
-			{ opacity: 0 },
-			{ opacity: 1},
-		);
-		tl.fromTo(
-			"#dock",
-			{ opacity: 0 },
-			{ opacity: 1 },
-		);
-	}, [isBooting]);
-
 	if (isBooting) {
 		return <BootingScreen />;
 	}
@@ -60,10 +47,14 @@ function App() {
 	return (
 		<main>
 			<Navbar />
+			<Dock />
 			<About />
 			<Projects />
-			<Dock />
 			<Resume />
+			<Skills />
+			<Contact />
+			<Terminal />
+			<Finder />
 			<Desktop />
 		</main>
 	);
