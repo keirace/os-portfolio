@@ -7,22 +7,20 @@ const FileIcon = ({ label, icon, onDoubleClick, position }) => {
 	
 	useGSAP(() => {
 		if (!Draggable) return;
+		if (!iconRef.current || !iconRef.current.parentElement) return;
+		const parentBounds = iconRef.current.parentElement.getBoundingClientRect();
 		const [draggable] = Draggable.create(iconRef.current, {
-			bounds: "main",
+			bounds: {
+				top: 20,
+				left: 0,
+				width: parentBounds.width,
+				height: parentBounds.height - 20,
+			},
 			inertia: true,
 			edgeResistance: 0.65,
 			type: "x,y",
 			zIndexBoost: false,
 			cursor: "default",
-			liveSnap: {
-				points: (endValue) => {
-					const step = 150;
-					return {
-						x: Math.round(endValue.x / step) * step,
-						y: Math.round(endValue.y / step) * step,
-					};
-				},
-			},
 			onPress() {
 				this.target.focus();
 			},
@@ -36,7 +34,7 @@ const FileIcon = ({ label, icon, onDoubleClick, position }) => {
 	return (
 		<div
 			ref={iconRef}
-			className={`draggable icons absolute group ${position}`}
+			className={`icons absolute group ${position}`}
 			tabIndex={0}
 			onDoubleClick={onDoubleClick}
 			onKeyDown={(e) => {
