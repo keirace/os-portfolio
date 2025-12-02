@@ -10,21 +10,22 @@ const user = "user";
 const host = "pinos";
 
 const getInitialHistory = () => {
-    return [
-        { type: "response", content: `Last login: ${getDateTime()} on ttys021` },
-        { type: "response", content: "Welcome to PinOS Terminal!" },
-        { type: "response", content: "Type 'help' to get started." },
-    ];
+	return [
+		{ type: "response", content: `Last login: ${getDateTime()} on ttys021` },
+		{ type: "response", content: "Welcome to PinOS Terminal!" },
+		{ type: "response", content: "Type 'help' to get started." },
+	];
 };
 
 const Terminal = () => {
-    const isOpen = useWindowsStore((state) => state.windows[WINDOW_IDS.TERMINAL].isOpen);
+	const isOpen = useWindowsStore((state) => state.windows[WINDOW_IDS.TERMINAL].isOpen);
 
 	const prompt = `${user}@${host} ~ % `;
 	const [history, setHistory] = useState(getInitialHistory());
 	const [input, setInput] = useState("");
 	const inputRef = useRef(null);
 	const terminalRef = useRef(null);
+	const [isReady, setIsReady] = useState(false);
 
 	const handleCommand = (command) => {
 		setHistory([...history, command]);
@@ -76,6 +77,7 @@ const Terminal = () => {
 			startTransition(() => {
 				setHistory(getInitialHistory());
 				setInput("");
+				setIsReady(false);
 			});
 		}
 	}, [isOpen]);
@@ -85,13 +87,13 @@ const Terminal = () => {
 		if (terminalRef.current) terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
 	}, [history]);
 
-    useGSAP(() => {
-        gsap.fromTo(
-            ".history",
-            { opacity: 0 },
-            { opacity: 1, stagger: 0.3, ease: "elastic", delay: 0.5 }
-        );
-    }, []);
+	useGSAP(() => {
+		const randomDelay = Math.random() * 2 + 0.5;
+		gsap.fromTo(".history", { display: "none", delay: randomDelay }, { display: "block", stagger: 1, duration: 3, delay: randomDelay});
+		setTimeout(() => {
+			setIsReady(true);
+		}, randomDelay * 1000 + 3000);
+	}, [isOpen]);
 
 	return (
 		<div ref={terminalRef} className="terminal-window bg-gray-500/70 text-black font-mono text-xs p-4 pt-5 overflow-y-scroll h-full" onClick={() => inputRef.current?.focus()}>
@@ -103,16 +105,18 @@ const Terminal = () => {
 					</div>
 				))}
 			</div>
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					handleCommand(input);
-				}}
-				className="mt-1 flex mb-5"
-			>
-				<span className="mr-2">{prompt}</span>
-				<input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)} className="focus:outline-none flex-1 whitespace-pre-wrap" autoFocus />
-			</form>
+			{isReady && (
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						handleCommand(input);
+					}}
+					className="mt-1 flex mb-5"
+				>
+					<span className="mr-2">{prompt}</span>
+					<input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)} className="focus:outline-none flex-1 whitespace-pre-wrap" autoFocus />
+				</form>
+			)}
 		</div>
 	);
 };
