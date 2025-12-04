@@ -1,4 +1,3 @@
-import { Fragment} from "react";
 import { WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
 import { ChevronDown, ChevronLeft, ChevronRight, CircleArrowDown, Plus, ChevronsRight,X, Search } from "lucide-react";
@@ -8,9 +7,6 @@ import WindowControls from "./WindowControls";
 
 
 const Safari = ({ address }) => {
-	const { windows } = useWindowsStore();
-	const window = windows[WINDOW_IDS.SAFARI];
-
 	return <div className="bg-secondary w-full h-full">
 		{address && <iframe src={address} title="Safari Window" className="object-contain w-full h-full" /> }
 	</div>;

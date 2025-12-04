@@ -5,9 +5,6 @@ import useWindowsStore from "@store/window";
 import { WINDOW_IDS, apps } from "@constants";
 import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch";
 import WindowControls from "./WindowControls";
-import { useRef, useState } from "react";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
