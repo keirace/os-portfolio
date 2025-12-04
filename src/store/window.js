@@ -16,7 +16,7 @@ const useWindowsStore = create(
 				}
 			})
 		},
-		openWindow: (id, data = null) => {
+		openWindow: (id, data = null, title = null) => {
 			set((state) => {
 				const window = state.windows[id];
 				if (window) {
@@ -25,6 +25,7 @@ const useWindowsStore = create(
 					window.zIndex = state.nextZIndex;
 					state.nextZIndex += 1;
 					window.data = data;
+					window.title = title;
 				}
 			});
 		},

@@ -54,6 +54,8 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 					opacity: 0,
 					x: dockIconPosition.x,
 					y: dockIconPosition.y,
+					width: 50,
+					height: 50,
 				},
 				{
 					opacity: 1,
@@ -167,15 +169,15 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 				{customizeTitleBar ? (
 					customizeTitleBar
 				) : (
-					<div className="title-bar-container">
+					<div className="title-bar-container relative">
 						<WindowControls title={id} />
-						<div className="text-center grow text-secondary-foreground -ml-7 text-sm font-medium">{title}</div>
+						<div className="text-center grow text-secondary-foreground -ml-10 text-sm font-medium">{title}</div>
 					</div>
 				)}
 			</div>
-			
+
 			{/* Window Content */}
-			<div className="grow overflow-y-auto h-full">{children}</div>
+			<div className="grow overflow-y-auto min-h-0 h-full">{children}</div>
 
 			{/* --- Resize Handles --- */}
 			<div className="absolute left-0 top-0 bottom-0 w-2 ew-resize" onMouseDown={(e) => handleResize(e, "w")} />
