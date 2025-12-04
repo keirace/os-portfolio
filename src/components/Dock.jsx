@@ -1,6 +1,6 @@
 import { apps, tooltipStyle } from "@constants";
 import { useGSAP } from "@gsap/react";
-import { useRef, createElement, useEffect } from "react";
+import { useRef, createElement, useEffect, Fragment, useMemo } from "react";
 import { gsap } from "gsap";
 import { Tooltip } from "react-tooltip";
 import useWindowsStore from "@store/window";
@@ -8,6 +8,11 @@ import useWindowsStore from "@store/window";
 const Dock = () => {
 	const { openWindow, setDockIconPosition, windows, activeMenu, focusWindow } = useWindowsStore();
 	const dockRef = useRef(null);
+	const previousVisibleIds = useRef(new Set());
+
+	const visibleApps = useMemo(() => {
+		return Object.values(apps).filter(({ id, hidden }) => !(hidden && !windows[id]?.isOpen));
+	}, [windows]);
 
 	useEffect(() => {
 		// Set initial icon positions
@@ -20,9 +25,14 @@ const Dock = () => {
 		});
 	}, [setDockIconPosition]);
 
+	// Dock icon magnification effect
 	useGSAP(() => {
+		if (!dockRef.current) return;
+
 		const icons = dockRef.current.querySelectorAll(".dock-icon");
 		const { left } = dockRef.current.getBoundingClientRect();
+
+		if (!icons.length) return;
 
 		const animateIcons = (mouseX) => {
 			icons.forEach((icon) => {
@@ -46,6 +56,16 @@ const Dock = () => {
 			});
 		};
 
+		dockRef.current.addEventListener("mousemove", handleMouseMove);
+		dockRef.current.addEventListener("mouseleave", resetIcons);
+		return () => {
+			dockRef.current.removeEventListener("mousemove", handleMouseMove);
+			dockRef.current.removeEventListener("mouseleave", resetIcons);
+		};
+	}, [visibleApps]);
+
+	// Initial dock fade-in animation
+	useGSAP(() => {
 		const tl = gsap.timeline();
 		tl.fromTo(dockRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, ease: "power3.out" });
 		tl.fromTo(
@@ -58,14 +78,25 @@ const Dock = () => {
 				ease: "back.out(1.7)",
 			}
 		);
-
-		dockRef.current.addEventListener("mousemove", handleMouseMove);
-		dockRef.current.addEventListener("mouseleave", resetIcons);
-		return () => {
-			dockRef.current.removeEventListener("mousemove", handleMouseMove);
-			dockRef.current.removeEventListener("mouseleave", resetIcons);
-		};
 	}, []);
+
+	useGSAP(() => {
+		const currentVisibleIds = new Set(visibleApps.map((app) => app.id));
+		const newlyVisibleIds = [...currentVisibleIds].filter((id) => !previousVisibleIds.current.has(id));
+
+		if (newlyVisibleIds.length > 0) {
+			const tl = gsap.timeline();
+			newlyVisibleIds.forEach((id) => {
+				const icon = dockRef.current.querySelector(`#${id}`);
+				if (icon) {
+					tl.fromTo(icon, { opacity: 0, y: 0 }, { opacity: 1, y: -50, duration: 0.8, ease: "power3.out" });
+					tl.to(icon, { y: 0, duration: 0.5, ease: "bounce.Out" }, "-=0.3");
+				}
+			});
+		}
+
+		previousVisibleIds.current = currentVisibleIds;
+	}, [visibleApps]);
 
 	const toggleWindow = ({ id, canOpen }) => {
 		if (!canOpen) return;
@@ -77,20 +108,11 @@ const Dock = () => {
 		openWindow(id);
 	};
 
-	// useGSAP(() => {
-	// 	gsap.fromTo(
-	// 		"#"+activeMenu,
-	// 		{ opacity: 0, y: 50 },
-	// 		{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }
-	// 	 );
-	// }, [windows[activeMenu]]);
-
 	return (
 		<section id="dock" ref={dockRef}>
 			<div className="dock-container">
-				{Object.values(apps).map(({ id, icon, color, label, hidden }) => {
+				{visibleApps.map(({ id, icon, color, label }) => {
 					const isActive = activeMenu === id;
-					if (hidden && !windows[id]?.isOpen) return null;
 					return typeof icon === "string" ? (
 						<button
 							key={id}
