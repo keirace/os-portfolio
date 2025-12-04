@@ -1,4 +1,4 @@
-import { useState, createElement, useEffect, useRef } from "react";
+import { useState, createElement, useEffect, useRef, useMemo } from "react";
 import { navMenus, navIcons, modeIcon, submenu, apps } from "@constants";
 import { getDateTime } from "@utilities/navbar";
 import { useGSAP } from "@gsap/react";
@@ -20,6 +20,8 @@ const Navbar = () => {
 	const setIsDarkMode = useSystemStore((state) => state.setIsDarkMode);
 	const activeMenu = useWindowsStore((state) => state.activeMenu);
 	const activeMenuLabel = apps[activeMenu]?.label || "portfolio";
+	const menuItems = useMemo(() => navMenus(activeMenuLabel), [activeMenuLabel]);
+	const submenuItems = useMemo(() => submenu({ setActiveNavMenu }), [setActiveNavMenu]);
 
 	useEffect(() => {
 		// Update current date every minute
@@ -68,7 +70,7 @@ const Navbar = () => {
 				{/* Left menu */}
 				<div>
 					<ul>
-						{navMenus(activeMenuLabel).map(({ id, label, alt }) => (
+						{menuItems.map(({ id, label, alt }) => (
 							<li key={id}>
 								<button aria-label={alt ?? label} onClick={(e) => handleMenuClick(e, id)} className={`capitalize ${activeMenu === id ? "font-semibold" : "font-normal"}`}>
 									{getButtonContent({ label })}
@@ -96,10 +98,10 @@ const Navbar = () => {
 				</div>
 			</div>
 			{/* Dropdown menu */}
-			{activeMenu && submenu({})[activeNavMenu] && (
+			{activeMenu && submenuItems[activeNavMenu] && (
 				<div className="dropdown-menu" style={{ left: dropdownXPosition }}>
 					<ul>
-						{submenu({ setActiveNavMenu })[activeNavMenu]?.map((item, index) => {
+						{submenuItems[activeNavMenu]?.map((item, index) => {
 							if (item.type === "separator") {
 								return <hr key={index} />;
 							}
