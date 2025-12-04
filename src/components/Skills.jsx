@@ -19,7 +19,7 @@ const Skills = () => {
     }, []);
 
 	return (
-		<div className="p-8 mb-8 bg-primary-foreground">
+		<div className="window-container">
 			<h1 className="text-accent-foreground mb-6">Skills & Technologies</h1>
 
 			<div className="grid md:grid-cols-2 gap-6">
@@ -39,10 +39,9 @@ const Skills = () => {
 									<div key={i}>
 										<div className="flex justify-between mb-1">
 											<span className="text-accent-foreground">{skill.name}</span>
-											<span className="text-gray-500">{skill.level}%</span>
 										</div>
 										<div className="w-full bg-popover rounded-full h-2 skill-bar">
-											<div className="bg-blue-600 h-2 rounded-full transition-all duration-500" style={{ width: `${skill.level}%` }} data-level={skill.level} />
+											<div className="bg-accent h-2 rounded-full transition-all duration-500" style={{ width: `${skill.level}%` }} data-level={skill.level} />
 										</div>
 									</div>
 								))}
@@ -58,7 +57,7 @@ const Skills = () => {
 				<div key={index} className="space-y-4">
 					<div className="flex gap-4">
 						<div className="flex flex-col items-center">
-							<div className="w-3 h-3 bg-blue-600 rounded-full" />
+							<div className="w-3 h-3 bg-accent rounded-full" />
 							<div className="w-0.5 h-full bg-blue-200" />
 						</div>
 						<div className="pb-6">

@@ -1,18 +1,22 @@
 import { MapPin, Briefcase, GraduationCap } from "lucide-react";
 import Window from "./Window";
 import { WINDOW_IDS, apps } from "@constants";
+import useWindowsStore from "@store/window";
 
 const About = () => {
+	const width = useWindowsStore((state) => state.windows[WINDOW_IDS.ABOUT].width);
+	const isMobile = width < 500;
+
 	return (
-		<div className="p-8 min-h-0 mb-8 bg-primary-foreground">
-			<div className="flex flex-col md:flex-row gap-8 items-start">
+		<div className="window-container">
+			<div className={`${isMobile ? "flex-col" : "md:flex-row"} flex gap-8 items-start`}>
 				<div className="shrink-0">
 					<img src="/images/photos.png" alt="Pinkaew Horputra" className="w-48 h-48 rounded-full object-cover" />
 				</div>
 
 				<div className="flex-1">
 					<h1 className="mb-2">Pinkaew Horputra</h1>
-					<h2 className="text-blue-600 mb-6">Full Stack Software Engineer</h2>
+					<h2 className="text-accent mb-6">Full Stack Software Engineer</h2>
 
 					<div className="space-y-4 mb-6">
 						<div className="flex items-start gap-3">
@@ -43,7 +47,7 @@ const About = () => {
 							user-friendly interfaces.
 						</p>
 
-						<p className="">
+						<p>
 							My experience spans full-stack development, with a focus on modern JavaScript frameworks, microservices architecture, and DevOps practices. I'm always eager to learn new
 							technologies and contribute to innovative projects.
 						</p>
