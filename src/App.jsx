@@ -14,6 +14,8 @@ import Skills from "@components/Skills";
 import Contact from "@components/Contact";
 import Terminal from "@components/Terminal";
 import Finder from "@components/Finder";
+import TextEdit from "@components/TextEdit";
+import Safari from "@components/Safari";
 
 gsap.registerPlugin(Draggable);
 
@@ -55,6 +57,8 @@ function App() {
 			<Contact />
 			<Terminal />
 			<Finder />
+			<TextEdit />
+			<Safari	/>
 			<Desktop />
 		</main>
 	);

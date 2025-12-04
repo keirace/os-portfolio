@@ -5,7 +5,7 @@ import DesktopIcon from "./FileIcon";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
-import { WINDOW_IDS } from "@constants";
+import { WINDOW_IDS, CREDITS } from "@constants";
 
 const Desktop = () => {
 	const { openWindow } = useWindowsStore();
@@ -30,6 +30,7 @@ const Desktop = () => {
 
 			{/* Desktop Icons */}
 			<DesktopIcon label="resume.pdf" icon="/images/resume.png" position="bottom-30 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.RESUME)} />
+			<DesktopIcon label="credits.txt" icon="/images/plain.png" position="bottom-60 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.TEXTEDIT, CREDITS, "credits.txt")} />
 		</div>
 	);
 };
