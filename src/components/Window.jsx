@@ -165,11 +165,11 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 	return (
 		<div ref={windowRef} id={id} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute rounded-xl flex flex-col overflow-hidden glassmorphism`}>
 			{/* Window Title Bar */}
-			<div ref={titleBarRef}>
+			<div ref={titleBarRef} className="shrink-0">
 				{customizeTitleBar ? (
 					customizeTitleBar
 				) : (
-					<div className="title-bar-container relative">
+					<div className="title-bar-container">
 						<WindowControls title={id} />
 						<div className="text-center grow text-secondary-foreground -ml-10 text-sm font-medium">{title}</div>
 					</div>
@@ -177,7 +177,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			</div>
 
 			{/* Window Content */}
-			<div className="grow overflow-y-auto min-h-0 h-full">{children}</div>
+			<div className="min-h-0 h-full overflow-y-auto">{children}</div>
 
 			{/* --- Resize Handles --- */}
 			<div className="absolute left-0 top-0 bottom-0 w-2 ew-resize" onMouseDown={(e) => handleResize(e, "w")} />
