@@ -1,4 +1,5 @@
-export { navMenus, submenu, navIcons, modeIcon } from "./navbar";
+export * from "./navbar";
+export * from "./finder";
 
 // Apps for Dock
 import { User, FolderOpen, Award, Mail, FileUser } from "lucide-react";
@@ -9,9 +10,11 @@ export const apps = {
 	projects: { id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
 	skills: { id: "skills", icon: Award, color: "text-pink-400", label: "Skills" },
 	contact: { id: "contact", icon: Mail, color: "text-purple-400", label: "Contact" },
-	browser: { id: "browser", icon: "/images/safari.png", label: "Browser" },
+	browser: { id: "browser", icon: "/images/safari.png", label: "Safari" },
 	resume: { id: "resume", icon: "/images/preview.png", label: "Preview", hidden: true },
+	textedit: { id: "textedit", icon: "/images/textedit.png", label: "TextEdit", hidden: true },
 	trash: { id: "trash", icon: "/images/trash.png", label: "Trash" },
+	settings: { id: "settings", icon: FileUser, color: "text-green-400", label: "Settings" },
 };
 
 export const tooltipStyle = {
@@ -30,7 +33,7 @@ export const INITIAL_Z_INDEX = 1;
 export const WINDOW_DEFAULTS = {
 	width: 600,
 	height: 400,
-	minWidth: 600,
+	minWidth: 400,
 	minHeight: 300,
 	isOpen: false,
 	isMinimized: false,
@@ -39,6 +42,7 @@ export const WINDOW_DEFAULTS = {
 	position: { x: innerWidth / 2 - 300, y: innerHeight / 2 - 200 },
 	zIndex: INITIAL_Z_INDEX,
 	data: null,
+	title: null,
 };
 
 export const WINDOW_IDS = {
@@ -49,6 +53,10 @@ export const WINDOW_IDS = {
 	RESUME: "resume",
 	TERMINAL: "terminal",
 	FINDER: "finder",
+	TEXTEDIT: "textedit",
+	SAFARI: "browser",
+	TRASH: "trash",
+	SETTINGS: "settings",
 };
 
 export const INITIAL_WINDOW_STATES = {
@@ -66,11 +74,26 @@ export const INITIAL_WINDOW_STATES = {
 	},
 	[WINDOW_IDS.RESUME]: {
 		...WINDOW_DEFAULTS,
+		width: 450,
+		height: 600,
+		position: { x: innerWidth / 2 - 225, y: innerHeight / 2 - 300 },
 	},
 	[WINDOW_IDS.TERMINAL]: {
 		...WINDOW_DEFAULTS,
 	},
 	[WINDOW_IDS.FINDER]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.TEXTEDIT]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.SAFARI]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.TRASH]: {
+		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.SETTINGS]: {
 		...WINDOW_DEFAULTS,
 	},
 };
@@ -224,4 +247,22 @@ export const timeline = [
 		duration: "📆 2017 - 2021",
 		description: "Completed undergraduate studies in computer engineering, gaining a solid foundation in programming, algorithms, and system design.",
 	},
+];
+
+export const CREDITS = `Design & Development: Pin Horputra
+Inspiration: macOS Big Sur, JS Mastery
+Icons: lucide.dev
+PDF Viewer: react-pdf
+3D Graphics: three.js
+Animations: GSAP
+Weather Data: open-meteo.com
+State Management: Zustand
+Games: js13kgames.com
+`;
+
+const WALLPAPERS = [
+	"/images/wallpapers/1.jpg",
+	"/images/wallpapers/2.jpg",
+	"/images/wallpapers/3.jpg",
+	"/images/wallpapers/4.jpg",
 ];
