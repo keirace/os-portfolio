@@ -88,11 +88,11 @@ const Terminal = () => {
 	}, [history]);
 
 	useGSAP(() => {
-		const randomDelay = Math.random() * 2 + 0.5;
-		gsap.fromTo(".history", { display: "none", delay: randomDelay }, { display: "block", stagger: 1, duration: 3, delay: randomDelay});
+		const randomDelay = Math.random() * 2 + 1; // Random delay between 1 to 3 seconds
+		gsap.fromTo(".history", { display: "none" }, { display: "block", stagger: 0.5, ease: "power2.inOut", delay: randomDelay });
 		setTimeout(() => {
 			setIsReady(true);
-		}, randomDelay * 1000 + 3000);
+		}, randomDelay * 1000 * 0.5 * 4); // approximate time for all history lines to appear
 	}, [isOpen]);
 
 	return (
