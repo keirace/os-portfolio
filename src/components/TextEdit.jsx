@@ -1,7 +1,7 @@
 import Window from "./Window";
 import useWindowsStore from "@store/window";
 import { WINDOW_IDS } from "@constants";
-import { useRef} from "react";
+import { useRef } from "react";
 
 const TextEdit = () => {
 	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.TEXTEDIT]);
@@ -9,10 +9,10 @@ const TextEdit = () => {
 	const data = window.data || "";
 
 	return (
-		<div className="p-8 min-h-0 mb-8 h-full bg-primary-foreground relative">
-		<div ref={contentRef} contentEditable suppressContentEditableWarning={true} className="textarea" style={{ overflowAnchor: "none" }}>
-			{data}
-		</div>
+		<div className="h-full bg-primary-foreground">
+			<div contentEditable suppressContentEditableWarning ref={contentRef} className="relative w-full h-[90%] grow focus:outline-none whitespace-pre-wrap overflow-y-auto">
+				{data}
+			</div>
 		</div>
 	);
 };
