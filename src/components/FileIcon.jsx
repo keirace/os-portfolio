@@ -1,40 +1,54 @@
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/all";
-import { useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
-const FileIcon = ({ label, icon, onDoubleClick, position }) => {
+const FileIcon = ({ label, icon, onDoubleClick, position,  }) => {
 	const iconRef = useRef(null);
-	
+	const parentRef = useRef(null);
+
+	useLayoutEffect(() => {
+		parentRef.current = iconRef.current?.parentElement;
+	}, []);
+
 	useGSAP(() => {
 		if (!Draggable) return;
-		if (!iconRef.current || !iconRef.current.parentElement) return;
-		const parentBounds = iconRef.current.parentElement.getBoundingClientRect();
-		const [draggable] = Draggable.create(iconRef.current, {
-			bounds: {
-				top: 20,
-				left: 0,
-				width: parentBounds.width,
-				height: parentBounds.height - 20,
-			},
+		const draggable = Draggable.create(iconRef.current, {
+			bounds: parentRef.current,
 			inertia: true,
 			edgeResistance: 0.65,
-			type: "x,y",
 			zIndexBoost: false,
-			cursor: "default",
 			onPress() {
 				this.target.focus();
 			},
+			onDragStart: function () {
+				this.startZIndex = this.target.style.zIndex;
+				this.target.style.zIndex = 1000;
+			},
+			onDragEnd: function () {
+				this.target.style.zIndex = this.startZIndex;
+				// if (setPosition) {
+				// 	const parentRect = parentRef.current.getBoundingClientRect();
+				// 	const iconRect = this.target.getBoundingClientRect();
+				// 	const top = iconRect.top - parentRect.top;
+				// 	const left = iconRect.left - parentRect.left;
+				// 	const position = `top-${Math.round(top)} left-${Math.round(left)}`;
+				// 	setPosition(label, position);
+				// }
+			},
+			cursor: "default",
 		});
-
 		return () => {
-			draggable?.kill();
+			if (draggable && draggable.length > 0) {
+				draggable[0].kill();
+			}
 		};
-	});
+	}, [parentRef.current]);
 
 	return (
-		<div
+		<button
+			aria-label={label}
 			ref={iconRef}
-			className={`icons absolute group ${position}`}
+			className={`icon-container absolute group ${position}`}
 			tabIndex={0}
 			onDoubleClick={onDoubleClick}
 			onKeyDown={(e) => {
@@ -43,7 +57,7 @@ const FileIcon = ({ label, icon, onDoubleClick, position }) => {
 		>
 			<div className="icon">{icon ? <img src={icon} alt={label} /> : <span className="text-6xl">📄</span>}</div>
 			<p>{label}</p>
-		</div>
+		</button>
 	);
 };
 
