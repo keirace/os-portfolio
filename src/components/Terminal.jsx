@@ -92,11 +92,11 @@ const Terminal = () => {
 		gsap.fromTo(".history", { display: "none" }, { display: "block", stagger: 0.5, ease: "power2.inOut", delay: randomDelay });
 		setTimeout(() => {
 			setIsReady(true);
-		}, randomDelay * 1000 * 0.5 * 4); // approximate time for all history lines to appear
+		}, randomDelay * 1000 * history.length); // Estimate when typing is done
 	}, [isOpen]);
 
 	return (
-		<div ref={terminalRef} className="terminal-window bg-gray-500/70 text-black font-mono text-xs p-4 pt-5 overflow-y-scroll h-full" onClick={() => inputRef.current?.focus()}>
+		<div ref={terminalRef} className="terminal-window bg-gray-400/60 text-black font-mono font-semibold text-xs p-4 pt-5 overflow-y-scroll h-full" onClick={() => inputRef.current?.focus()}>
 			<div className="terminal-output flex flex-col">
 				{history.map((cmd, index) => (
 					<div key={index} className="history mb-1 whitespace-pre-wrap">
