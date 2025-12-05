@@ -23,24 +23,33 @@ export const submenu = ({ setActiveNavMenu }) => ({
 		{ type: "separator" },
 		{ label: "System Preferences...", action: () => alert("System Preferences") },
 		{ type: "separator" },
-		{ label: "Sleep", action: () => {
-			const setIsBooting = useSystemStore.getState().setIsBooting;
-			const setBootingState = useSystemStore.getState().setBootingState;
-			setIsBooting(true);
-			setBootingState("sleep");
-			
-			setTimeout(() => {
-				setIsBooting(false);
-			}, 3000);
-		}},
+		{
+			label: "Sleep",
+			action: () => {
+				const setIsBooting = useSystemStore.getState().setIsBooting;
+				const setBootingState = useSystemStore.getState().setBootingState;
+				setIsBooting(true);
+				setBootingState("sleep");
+				window.document.body.style.cursor = "none";
+
+				window.addEventListener(
+					"mousemove",
+					() => {
+						setBootingState("ready");
+						setTimeout(() => {
+							setIsBooting(false);
+							window.document.body.style.cursor = "default";
+						}, 1000);
+					},
+					{ once: true }
+				);
+			},
+		},
 		{
 			label: "Restart...",
 			action: () => {
-				// const closeAllWindows = useWindowsStore.getState().closeAllWindows;
-				// closeAllWindows();
-
-                const setIsBooting = useSystemStore.getState().setIsBooting;
-                setIsBooting(true);
+				const setIsBooting = useSystemStore.getState().setIsBooting;
+				setIsBooting(true);
 
 				const setBootingState = useSystemStore.getState().setBootingState;
 				setBootingState("restart");
@@ -50,26 +59,37 @@ export const submenu = ({ setActiveNavMenu }) => ({
 				}, 1000);
 
 				setTimeout(() => {
-                    setIsBooting(false);
+					setIsBooting(false);
 				}, 3000);
 			},
 		},
-		{ label: "Shut Down...", action: () => {
-			// const closeAllWindows = useWindowsStore.getState().closeAllWindows;
-			// closeAllWindows();
-			const setIsBooting = useSystemStore.getState().setIsBooting;
-			const setBootingState = useSystemStore.getState().setBootingState;
-			setIsBooting(true);
-			setBootingState("shutdown");
+		{
+			label: "Shut Down...",
+			action: () => {
+				const setIsBooting = useSystemStore.getState().setIsBooting;
+				const setBootingState = useSystemStore.getState().setBootingState;
 
-			setTimeout(() => {
-				setBootingState("restart");
-			}, 1000);
+				setIsBooting(true);
+				window.document.body.style.cursor = "none";
+				setBootingState("shutdown");
 
-			setTimeout(() => {
-				setIsBooting(false);
-			}, 3000);
-		} },
+				setTimeout(() => {
+					setBootingState("sleep");
+				}, 2000);
+
+				window.addEventListener(
+					"mousemove",
+					() => {
+						setBootingState("ready");
+						setTimeout(() => {
+							setIsBooting(false);
+							window.document.body.style.cursor = "default";
+						}, 2000);
+					},
+					{ once: true }
+				);
+			},
+		},
 		{ type: "separator" },
 		{
 			label: "Log Out User...",
