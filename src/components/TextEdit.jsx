@@ -9,7 +9,7 @@ const TextEdit = () => {
 	const data = window.data || "";
 
 	return (
-		<div className="h-full bg-primary-foreground">
+		<div className="h-full bg-background px-2 text-sm">
 			<div contentEditable suppressContentEditableWarning ref={contentRef} className="relative w-full h-[90%] grow focus:outline-none whitespace-pre-wrap overflow-y-auto">
 				{data}
 			</div>

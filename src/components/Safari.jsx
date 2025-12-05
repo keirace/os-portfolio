@@ -1,13 +1,13 @@
 import { WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
-import { ChevronDown, ChevronLeft, ChevronRight, CircleArrowDown, Plus, ChevronsRight,X, Search } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Plus, ChevronsRight,X, Search } from "lucide-react";
 import { PanelLeftIcon } from "lucide-react";
 import Window from "./Window";
 import WindowControls from "./WindowControls";
 
 
 const Safari = ({ address }) => {
-	return <div className="bg-secondary w-full h-full">
+	return <div className="bg-secondary w-full h-full select-none">
 		{address && <iframe src={address} title="Safari Window" className="object-contain w-full h-full" /> }
 	</div>;
 };
