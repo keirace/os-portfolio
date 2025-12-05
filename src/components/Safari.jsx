@@ -1,18 +1,19 @@
 import { WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
-import { ChevronDown, ChevronLeft, ChevronRight, Plus, ChevronsRight,X, Search } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Plus, ChevronsRight, X, Search } from "lucide-react";
 import { PanelLeftIcon } from "lucide-react";
 import Window from "./Window";
 import WindowControls from "./WindowControls";
 
-
 const Safari = ({ address }) => {
-	return <div className="bg-secondary w-full h-full select-none">
-		{address && <iframe src={address} title="Safari Window" className="object-contain w-full h-full" /> }
-	</div>;
+	return (
+		<div className="bg-secondary w-full h-full select-none">
+			{address && <iframe src={address} title="Safari Window" className="w-full h-full" />}
+		</div>
+	);
 };
 
-const TitleBar = ({address}) => {
+const TitleBar = ({ address }) => {
 	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.SAFARI]);
 	const isMobile = window?.width <= 640;
 	address = address.split("//")[1]?.replace("www.", "") || "";
