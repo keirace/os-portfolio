@@ -11,18 +11,23 @@ const Dock = () => {
 	const previousVisibleIds = useRef(new Set());
 
 	const visibleApps = useMemo(() => {
-		return Object.values(apps).filter(({ id, hidden }) => !(hidden && !windows[id]?.isOpen));
+		return Object.entries(apps).filter(([id, { hidden }]) => !(hidden && !windows[id]?.isOpen));
 	}, [windows]);
 
 	useEffect(() => {
-		// Set initial icon positions
-		const icons = dockRef.current.querySelectorAll(".dock-icon");
-		icons.forEach((icon) => {
-			const rect = icon.getBoundingClientRect();
-			const position = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-			const id = icon.getAttribute("id");
-			setDockIconPosition(id, position);
-		});
+		const setInitialIconPositions = () => {
+			const icons = dockRef.current.querySelectorAll(".dock-icon");
+			icons.forEach((icon) => {
+				const rect = icon.getBoundingClientRect();
+				const position = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+				const id = icon.getAttribute("id");
+				setDockIconPosition(id, position);
+			});
+		};
+
+		setInitialIconPositions();
+		window.addEventListener("resize", setInitialIconPositions);
+		return () => window.removeEventListener("resize", setInitialIconPositions);
 	}, [setDockIconPosition]);
 
 	// Dock icon magnification effect
@@ -81,7 +86,7 @@ const Dock = () => {
 	}, []);
 
 	useGSAP(() => {
-		const currentVisibleIds = new Set(visibleApps.map((app) => app.id));
+		const currentVisibleIds = new Set(visibleApps.map(([id]) => id));
 		const newlyVisibleIds = [...currentVisibleIds].filter((id) => !previousVisibleIds.current.has(id));
 
 		if (newlyVisibleIds.length > 0) {
@@ -111,7 +116,7 @@ const Dock = () => {
 	return (
 		<section id="dock" ref={dockRef}>
 			<div className="dock-container">
-				{visibleApps.map(({ id, icon, color, label }) => {
+				{visibleApps.map(([id, { icon, color, label }]) => {
 					const isActive = activeMenu === id;
 					return typeof icon === "string" ? (
 						<button

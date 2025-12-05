@@ -17,6 +17,8 @@ import Finder from "@components/Finder";
 import TextEdit from "@components/TextEdit";
 import Safari from "@components/Safari";
 import Settings from "@components/Settings";
+import Game from "@components/Game";
+import { WINDOW_IDS } from "@constants";
 
 gsap.registerPlugin(Draggable);
 
@@ -61,6 +63,9 @@ function App() {
 			<TextEdit />
 			<Safari	/>
 			<Settings />
+			<Game gameId={WINDOW_IDS.CLAWSTRIKE} />
+			<Game gameId={WINDOW_IDS.TRIANGLE} />
+			<Game gameId={WINDOW_IDS.RACER} />
 			<Desktop />
 		</main>
 	);

@@ -48,6 +48,26 @@ const INITIAL_FINDER_FILES = {
 			icon: "/images/textedit.png",
 			position: "top-10 left-10",
 		},
+		{
+			label: "Racer.app",
+			icon: "/images/racer.png",
+			position: "top-40 left-30",
+		},
+		{
+			label: "Triangle: Back To Home.app",
+			icon: "/images/triangle.jpg",
+			position: "top-40 left-60",
+		},
+		{
+			label: "Clawstrike",
+			icon: "/images/clawstrike.png",
+			position: "top-40 left-80",
+		},
+		{
+			label: "Settings.app",
+			icon: "/images/settings.png",
+			position: "bottom-20 left-10",
+		}
 	],
 	recents: [
 		{
@@ -94,6 +114,15 @@ const createFileActions = (openWindow, setActiveFolder, setHistory) => ({
 			openWindow(WINDOW_IDS.SAFARI);
 		} else if (file.label === "TextEdit.app") {
 			openWindow(WINDOW_IDS.TEXTEDIT);
+		} else if (file.label === "Racer.app") {
+			openWindow(WINDOW_IDS.RACER);
+		} else if (file.label === "Triangle: Back To Home.app") {
+			openWindow(WINDOW_IDS.TRIANGLE);
+		} else if (file.label === "Clawstrike") {
+			openWindow(WINDOW_IDS.CLAWSTRIKE);
+		}
+		else if (file.label === "Settings.app") {
+			openWindow(WINDOW_IDS.SETTINGS);
 		}
 	},
 	user: (file) => {

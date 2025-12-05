@@ -2,7 +2,7 @@ export * from "./navbar";
 export * from "./finder";
 
 // Apps for Dock
-import { User, FolderOpen, Award, Mail, FileUser } from "lucide-react";
+import { User, FolderOpen, Award, Mail } from "lucide-react";
 export const apps = {
 	finder: { id: "finder", icon: "/images/finder.png", label: "Finder" },
 	settings: { id: "settings", icon: "/images/settings.png", label: "Settings" },
@@ -15,6 +15,9 @@ export const apps = {
 	resume: { id: "resume", icon: "/images/preview.png", label: "Preview", hidden: true },
 	textedit: { id: "textedit", icon: "/images/textedit.png", label: "TextEdit", hidden: true },
 	trash: { id: "trash", icon: "/images/trash.png", label: "Trash" },
+	clawstrike: { id: "clawstrike", icon: "/images/clawstrike.png", label: "Clawstrike", hidden: true },
+	triangle: { id: "triangle-back-to-home", icon: "/images/triangle.jpg", label: "Triangle", hidden: true },
+	racer: { id: "racer", icon: "/images/racer.png", label: "Racer", hidden: true },
 };
 
 export const tooltipStyle = {
@@ -57,6 +60,9 @@ export const WINDOW_IDS = {
 	SAFARI: "browser",
 	TRASH: "trash",
 	SETTINGS: "settings",
+	CLAWSTRIKE: "clawstrike",
+	TRIANGLE: "triangle",
+	RACER: "racer",
 };
 
 export const INITIAL_WINDOW_STATES = {
@@ -89,6 +95,24 @@ export const INITIAL_WINDOW_STATES = {
 	},
 	[WINDOW_IDS.SAFARI]: {
 		...WINDOW_DEFAULTS,
+	},
+	[WINDOW_IDS.CLAWSTRIKE]: {
+		...WINDOW_DEFAULTS,
+		width: 680,
+		height: 416,
+		position: { x: innerWidth / 2 - 340, y: innerHeight / 2 - 220 },
+	},
+	[WINDOW_IDS.TRIANGLE]: {
+		...WINDOW_DEFAULTS,
+		width: 680,
+		height: 440,
+		position: { x: innerWidth / 2 - 300, y: innerHeight / 2 - 300 },
+	},
+	[WINDOW_IDS.RACER]: {
+		...WINDOW_DEFAULTS,
+		width: 526,
+		height: 436,
+		position: { x: innerWidth / 2 - 256, y: innerHeight / 2 - 192 },
 	},
 	[WINDOW_IDS.TRASH]: {
 		...WINDOW_DEFAULTS,
@@ -250,14 +274,14 @@ export const timeline = [
 ];
 
 export const CREDITS = `Design & Development: Pin Horputra
-Inspiration: macOS Big Sur, JS Mastery
+Inspiration: macOS Sequoia, JS Mastery
 Icons: lucide.dev
 PDF Viewer: react-pdf
-3D Graphics: three.js
 Animations: GSAP
 Weather Data: open-meteo.com
 State Management: Zustand
-Games: js13kgames.com
+Games: js13kgames.com | Racer by jaammees | Triangle: Back To Home by Viktor Uhryn | Clawstrike by Rémi Vansteelandt
+Wallpapers: Unsplash | Andreas Gücklhorn | Andre Benz
 `;
 
 export const WALLPAPERS = [
