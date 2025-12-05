@@ -260,9 +260,18 @@ State Management: Zustand
 Games: js13kgames.com
 `;
 
-const WALLPAPERS = [
-	"/images/wallpapers/1.jpg",
-	"/images/wallpapers/2.jpg",
-	"/images/wallpapers/3.jpg",
-	"/images/wallpapers/4.jpg",
+export const WALLPAPERS = [
+	{id: 1, url:"/images/wallpapers/Gold.png", name: "Gold" },
+	{id: 2, url:"/images/wallpapers/Blue Violet.png", name: "Blue Violet" },
+	{id: 3, url:"/images/wallpapers/andreas-gucklhorn-mawU2PoJWfU-unsplash.jpg", name: "Andreas Gucklhorn"},
+	{id: 4, url:"/images/wallpapers/andre-benz-qJfznuTMAYA-unsplash.jpg", name: "Andre Benz"},
+];
+
+export const ACCENT_COLORS = [
+	{ name: "Blue", class: "oklch(0.577 0.245 237.325)" },
+	{ name: "Red", class: "oklch(0.586 0.253 17.585)" },
+	{ name: "Green", class: "oklch(0.648 0.2 131.684)" },
+	{ name: "Purple", class: "oklch(0.606 0.25 292.717)" },
+	{ name: "Yellow", class: "oklch(0.852 0.199 91.936)" },
+	{ name: "Pink", class: "oklch(0.7 0.3 340)" },
 ];

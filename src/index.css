@@ -30,7 +30,7 @@
 	--secondary-foreground: #030213;
 	--muted: #ececf0;
 	--muted-foreground: #717182;
-	--accent: #4f55ae;
+	--accent: #2a36dc;
 	--accent-foreground: #030213;
 	--destructive: #d4183d;
 	--destructive-foreground: #ffffff;
@@ -55,7 +55,7 @@
 	--sidebar-accent-foreground: oklch(0.205 0 0);
 	--sidebar-border: oklch(0.922 0 0);
 	--sidebar-ring: oklch(0.708 0 0);
-	--background-image: url("/images/Gold.png");
+	--background-image: url("/images/wallpapers/Gold.png");
 	--border-white: rgba(255, 255, 255, 0.341);
 }
 
@@ -77,6 +77,7 @@
 	--destructive-foreground: oklch(0.637 0.237 25.331);
 	--border: oklch(0.269 0 0);
 	--input: oklch(0.269 0 0);
+	--input-background: oklch(24.776% 0.00003 271.152);
 	--ring: oklch(0.439 0 0);
 	--font-weight-medium: 500;
 	--font-weight-normal: 400;
@@ -93,7 +94,7 @@
 	--sidebar-accent-foreground: oklch(0.985 0 0);
 	--sidebar-border: oklch(0.269 0 0);
 	--sidebar-ring: oklch(0.439 0 0);
-	--background-image: url("/images/Blue Violet.png");
+	--background-image: url("/images/wallpapers/Blue Violet.png");
 }
 
 @theme inline {
@@ -238,7 +239,7 @@ html {
 
 @layer components {
 	main {
-		@apply w-screen h-screen overflow-x-hidden;
+		@apply w-screen h-screen overflow-hidden;
 	}
 
 	nav {
@@ -268,7 +269,7 @@ html {
 			ul {
 				@apply flex flex-col items-start bg-primary-foreground/60 text-popover-foreground rounded-md mt-2 p-1 glassmorphism;
 				li {
-					@apply text-sm py-0.5 px-4 hover:bg-accent rounded-sm hover:text-accent-foreground w-full flex justify-between;
+					@apply text-sm py-0.5 px-4 hover:bg-accent rounded-sm hover:text-white w-full flex justify-between;
 					button {
 						@apply w-full text-left flex justify-between;
 					}
@@ -281,7 +282,7 @@ html {
 		@apply fixed bottom-2 left-1/2 -translate-x-1/2 z-500 bg-transparent p-2;
 
 		.dock-container {
-			@apply flex items-center gap-4 bg-transparent px-3 py-2 glassmorphism;
+			@apply flex items-center gap-4 bg-secondary/50 px-3 py-2 glassmorphism;
 
 			.dock-icon {
 				@apply w-14 h-14 object-contain rounded-xl flex items-center justify-center drop-shadow-sm active:brightness-70;
@@ -299,10 +300,13 @@ html {
 		@apply shrink-0 border-b flex items-center justify-between px-4 py-2 bg-primary-foreground;
 	}
 
-	.resume, .finder, .safari {
+	.resume,
+	.finder,
+	.safari {
 		&.title-bar {
-			@apply flex items-center justify-start w-full py-2 text-muted-foreground;
+			@apply flex items-center justify-between w-full py-2 text-muted-foreground;
 			.safari-group {
+				@apply flex items-center justify-center;
 				&:last-child {
 					@apply flex;
 				}
@@ -313,17 +317,22 @@ html {
 			h3 {
 				@apply text-sm font-medium text-accent-foreground;
 			}
-			.resume-group, div {
+			.resume-group,
+			div {
 				@apply flex items-start justify-center gap-1;
 			}
-			button, a {
-				@apply hover:bg-muted hover:rounded-sm flex items-center justify-center;
+			button,
+			a {
+				@apply hover:bg-foreground/10 hover:rounded-sm flex items-center justify-center;
 				svg {
 					@apply w-7 h-7 stroke-2 p-1;
 				}
 			}
-			input {
-				@apply rounded-sm px-2 py-1 text-sm focus:outline-none focus:border-accent;
+			.address-bar {
+				@apply rounded-md px-2 py-1 text-sm focus:outline-none focus:border-accent bg-input-background max-w-3;
+				input {
+					@apply flex-1;
+				}
 			}
 		}
 	}
@@ -338,22 +347,58 @@ html {
 					@apply w-2 h-2 text-yellow-600;
 				}
 			}
-			.textarea {
-				@apply text-black text-sm w-full h-full text-wrap p-4 focus:outline-none overflow-scroll;
+		}
+	}
+	.textarea {
+		@apply relative text-black text-sm w-full p-4 focus:outline-none overflow-y-auto whitespace-pre-wrap;
+	}
+	.icon-container {
+		@apply fixed select-none flex flex-col items-center w-24 outline-none;
+		.icon {
+			@apply w-18 h-18 mb-1 flex justify-center items-center border-muted-foreground/60 rounded-md group-focus:bg-black/10 group-focus:border-2;
+			img {
+				@apply w-16 h-16 object-contain drop-shadow-sm pointer-events-none;
 			}
+		}
+		p {
+			@apply px-1 rounded-sm text-white text-shadow-lg text-shadow-black/30 drop-shadow-md text-sm font-medium group-focus:text-shadow-none group-focus:bg-accent group-focus:drop-shadow-none;
+		}
+	}
+
+	.finder {
+		@apply flex items-start justify-start h-full;
+		.sidebar {
+			@apply w-40 h-full bg-sidebar/90 backdrop-blur-2xl border-r border-r-background flex flex-col shrink-0 p-3 space-y-1 select-none;
+			svg {
+				@apply w-4 text-accent;
+			}
+		}
+		.address-bar {
+			@apply flex items-center gap-1 absolute bottom-0 left-0 border-t border-t-primary/10 w-full backdrop-blur-xl;
 		}
 
-		.icons {
-			@apply fixed select-none flex flex-col items-center w-24 outline-none;
-			.icon {
-				@apply w-18 h-18 mb-1 flex justify-center items-center border-muted-foreground/60 rounded-md group-focus:bg-black/10 group-focus:border-2;
-				img {
-					@apply w-16 h-16 object-contain drop-shadow-2xl pointer-events-none;
-				}
-			}
-			p {
-				@apply px-1 rounded-sm text-white drop-shadow-md drop-shadow-black/70 text-sm font-medium group-focus:bg-accent group-focus:drop-shadow-none;
-			}
+		.main-content {
+			@apply bg-secondary text-gray-500 w-full h-full grow text-center overflow-auto relative;
+					.icon {
+						@apply border-none group-focus:bg-accent-foreground/10;
+					}
+					p {
+						@apply text-primary text-xs font-normal text-shadow-none group-focus:text-white;
+					}
+			
 		}
+	}
+
+	#textedit .textarea {
+		@apply h-full w-full px-2 py-2 bg-background overflow-y-auto outline-none absolute top-0 left-0 text-foreground;
+	}
+
+	.window-container {
+		@apply p-8 pb-16 h-full overflow-y-auto bg-primary-foreground;
+	}
+
+
+	.address-bar-button {
+		@apply px-2 py-1 rounded-sm text-xs transition-colors active:text-primary;
 	}
 }
