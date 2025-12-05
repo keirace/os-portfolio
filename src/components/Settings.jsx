@@ -31,13 +31,12 @@ const Settings = ({ activeFolder, setActiveFolder }) => {
 				<RenderSidebar items={SIDEBAR_ITEMS} activeFolder={activeFolder} setActiveFolder={setActiveFolder} />
 			</div>
 
-			<div className="main-content p-4 overflow-y-auto">
+			<div className="main-content p-4 overflow-y-auto select-none">
 				{activeFolder === "wallpaper" && (
 					<div className={`grid grid-cols-2 ${isMobile ? "sm:grid-cols-2" : "sm:grid-cols-4"} gap-4`}>
 						{WALLPAPERS.map((wp) => (
 							<div key={wp.id} className="relative" onClick={() => setWallpaper(wp.url)}>
 								<img src={wp.url} alt={wp.name} className={`w-full aspect-16/10 object-cover rounded-lg transition-all ${selected === wp.id && "ring-4 ring-accent"}`} />
-								<p className="text-xs mt-1 text-center">{wp.name}</p>
 							</div>
 						))}
 					</div>
@@ -46,7 +45,7 @@ const Settings = ({ activeFolder, setActiveFolder }) => {
 				{activeFolder === "appearance" && (
 					<div className="mt-6 text-sm text-muted-foreground border-muted-foreground/20 border p-4 rounded-lg">
 						<div className="flex justify-between items-center border-b border-b-muted-foreground/20 pb-2 mb-2">
-							<h3>Appearance</h3>
+							<h3>Dark Mode</h3>
 							<label className="inline-flex relative items-center">
 								<input
 									type="checkbox"
