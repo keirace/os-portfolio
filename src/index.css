@@ -31,7 +31,7 @@
 	--muted: #ececf0;
 	--muted-foreground: #717182;
 	--accent: #2a36dc;
-	--accent-foreground: #030213;
+	--accent-foreground: brightness(var(--accent), 40%);
 	--destructive: #d4183d;
 	--destructive-foreground: #ffffff;
 	--border: rgba(0, 0, 0, 0.12);
@@ -288,7 +288,7 @@ html {
 				@apply w-14 h-14 object-contain rounded-xl flex items-center justify-center drop-shadow-sm active:brightness-70;
 			}
 			.dock-pointer {
-				@apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-accent-foreground/70 rounded-full;
+				@apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-foreground/70 rounded-full;
 			}
 			.dock-label {
 				@apply absolute left-1/2 -translate-x-1/2 -top-10 bg-popover/50 border-muted-foreground/40 text-foreground text-xs px-2 py-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none;
@@ -379,13 +379,12 @@ html {
 
 		.main-content {
 			@apply bg-secondary text-gray-500 w-full h-full grow text-center overflow-auto relative;
-					.icon {
-						@apply border-none group-focus:bg-accent-foreground/10;
-					}
-					p {
-						@apply text-primary text-xs font-normal text-shadow-none group-focus:text-white;
-					}
-			
+			.icon {
+				@apply border-none group-focus:bg-accent-foreground/10;
+			}
+			p {
+				@apply text-primary text-xs font-normal text-shadow-none group-focus:text-white;
+			}
 		}
 	}
 
@@ -397,8 +396,23 @@ html {
 		@apply p-8 pb-16 h-full overflow-y-auto bg-primary-foreground;
 	}
 
-
 	.address-bar-button {
 		@apply px-2 py-1 rounded-sm text-xs transition-colors active:text-primary;
+	}
+
+	#skills,
+	#projects {
+		.headline {
+			@apply flex items-center gap-3 mb-4;
+			.icon {
+				@apply w-10 h-10 bg-accent-foreground rounded-lg flex items-center justify-center;
+				svg {
+					@apply w-5 h-5 text-accent;
+				}
+			}
+		}
+		.link {
+			@apply flex items-center gap-2 text-secondary-foreground hover:brightness-70 transition-colors;
+		}
 	}
 }
