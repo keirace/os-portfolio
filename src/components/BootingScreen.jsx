@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useSystemStore, { BOOTING_IDS, BOOTING_TEXT_MAP } from "@store/system";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import useWindowsStore from "@store/window";
 
 const BootingScreen = () => {
+	const bootingScreenRef = useRef(null);
 	const isBooting = useSystemStore((state) => state.isBooting);
 	const bootingText = useSystemStore((state) => state.bootingText);
 	const { closeAllWindows } = useWindowsStore();
 
 	useGSAP(() => {
 		gsap.fromTo(
-			"#booting-screen",
+			bootingScreenRef.current,
 			{ opacity: 0, ease: "power2.inOut", duration: 2 },
 			{ opacity: 1, duration: 1, ease: "power2.inOut" },
 		);
@@ -25,7 +26,7 @@ const BootingScreen = () => {
 	}, [isBooting, closeAllWindows, bootingText]);
 
 	return (
-		<div id="booting-screen" className="min-h-screen flex items-center justify-center bg-black text-white">
+		<div ref={bootingScreenRef} className="min-h-screen flex items-center justify-center bg-black text-white">
 			<div className="flex flex-col items-center">
 				{bootingText && (
 					<>
