@@ -5,6 +5,7 @@ export * from "./finder";
 import { User, FolderOpen, Award, Mail, FileUser } from "lucide-react";
 export const apps = {
 	finder: { id: "finder", icon: "/images/finder.png", label: "Finder" },
+	settings: { id: "settings", icon: "/images/settings.png", label: "Settings" },
 	terminal: { id: "terminal", icon: "/images/terminal.png", label: "Terminal" },
 	about: { id: "about", icon: User, color: "text-orange-400", label: "About Me" },
 	projects: { id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
@@ -14,7 +15,6 @@ export const apps = {
 	resume: { id: "resume", icon: "/images/preview.png", label: "Preview", hidden: true },
 	textedit: { id: "textedit", icon: "/images/textedit.png", label: "TextEdit", hidden: true },
 	trash: { id: "trash", icon: "/images/trash.png", label: "Trash" },
-	settings: { id: "settings", icon: FileUser, color: "text-green-400", label: "Settings" },
 };
 
 export const tooltipStyle = {

@@ -16,6 +16,7 @@ import Terminal from "@components/Terminal";
 import Finder from "@components/Finder";
 import TextEdit from "@components/TextEdit";
 import Safari from "@components/Safari";
+import Settings from "@components/Settings";
 
 gsap.registerPlugin(Draggable);
 
@@ -59,6 +60,7 @@ function App() {
 			<Finder />
 			<TextEdit />
 			<Safari	/>
+			<Settings />
 			<Desktop />
 		</main>
 	);
