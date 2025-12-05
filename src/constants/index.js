@@ -122,35 +122,80 @@ export const INITIAL_WINDOW_STATES = {
 	},
 };
 
-export const projects = [
-	{
-		title: "E-Commerce Platform",
-		description:
-			"A full-featured e-commerce platform built with Next.js and React, featuring product listings, shopping cart functionality, user authentication, and payment processing using Stripe.",
-		image: "/images/ecommerce.png",
-		tech: ["Next.js", "React", "Node.js", "PostgreSQL", "Stripe", "Tailwind CSS", "Better Auth"],
-		github: "#",
-		demo: "https://ecommerce.pinkaew.me",
+import { Code, Database, Cloud, Wrench, Palette } from "lucide-react";
+export const projects = {
+	Dev: {
+		icon: Code,
+		title: "Development Projects",
+		items: [
+			{
+				title: "pinOS - Portfolio macOS (This one!)",
+				description:
+					"A macOS-inspired personal portfolio website built with React and Tailwind CSS, featuring interactive windowed applications, a dynamic desktop environment, and a responsive design.",
+				image: "/images/pinos.png",
+				tech: ["React", "Tailwind CSS", "Zustand", "EmailJS", "GSAP", "Vite"],
+				github: "https://github.com/keirace/os-portfolio",
+				demo: "https://pinos.pinkaew.me",
+			},
+			{
+				title: "E-Commerce Platform (Nike Clone)",
+				description:
+					"A full-featured e-commerce platform built with Next.js and React, featuring product listings, shopping cart functionality, user authentication, and payment processing using Stripe.",
+				image: "/images/ecommerce.png",
+				tech: ["Next.js", "React", "Node.js", "PostgreSQL", "Stripe", "Tailwind CSS", "Better Auth"],
+				github: "https://github.com/keirace/ecommerce",
+				demo: "https://ecommerce.pinkaew.me",
+			},
+			{
+				title: "3D Portfolio Coffee Shop",
+				description:
+					"An interactive 3D portfolio website built with Three.js, featuring a virtual coffee shop environment that guides users through different sections such as About, Projects, and Contact.",
+				image: "/images/pinscafe.png",
+				tech: ["React", "React Three Fiber", "Vite", "GLSL", "Blender"],
+				demo: "https://www.pinkaew.me",
+			},
+			{
+				title: "Three.js Journey Learning Progress",
+				description:
+					"A collection of interactive 3D scenes and technical experiments built while mastering WebGL. Features custom shaders, physics simulations, and particle systems based on the curriculum from the renowned Three.js Journey course.",
+				image: "/images/threejs.png",
+				tech: ["Three.js", "React Three Fiber", "React", "Three.js", "JavaScript", "GLSL", "Blender"],
+				github: "https://github.com/keirace/threejs-journey",
+				demo: "https://threejsjourney.pinkaew.me/",
+			},
+		],
 	},
-	{
-		title: "3D Portfolio Coffee Shop",
-		description:
-			"An interactive 3D portfolio website built with Three.js, featuring a virtual coffee shop environment that guides users through different sections such as About, Projects, and Contact.",
-		image: "/images/image.png",
-		tech: ["React", "Three.js", "Vite", "Blender"],
-		github: "#",
-		demo: "https://www.pinkaew.me",
+	UIUX: {
+		icon: Palette,
+		title: "UI/UX Design Projects",
+		items: [
+			{
+				title: "Framer Motion Portfolio",
+				description:
+					"A sleek and modern portfolio website made for my UI/UX course built with React and Framer Motion, featuring smooth animations, interactive components, and a responsive design to showcase projects and skills.",
+				image: "/images/framer.png",
+				tech: ["Framer Motion"],
+				demo: "https://pinkaew-h.framer.website/",
+			},
+			{
+				title: "Library Room Booking (LibCal) Redesign",
+				description:
+					"A UX redesign of Northeastern University’s library room booking system, including responsive web layouts and a new mobile app design focused on accessibility and student workflows.",
+				image: "/images/libcal.png",
+				tech: ["Figma", "UX Research", "Wireframing", "Prototyping"],
+				demo: "https://www.figma.com/proto/dwJXM9exuklVw4qvWk5tA7/NU-Library-App?node-id=0-1&t=KZrPizjXzXOP9uh7-1",
+			},
+			{
+				title: "Urbann: Apartment Rental App Redesign",
+				description:
+					"A comprehensive UX redesign of an apartment rental application, featuring improved navigation, user-friendly interfaces, and enhanced search and filter functionalities for a better user experience.",
+				image: "/images/urbann.png",
+				tech: ["Figma", "UX Research", "Wireframing", "Prototyping"],
+				demo: "https://www.figma.com/proto/C8scL3vspUE8vOAw0ZtUCo/Apartment-Rental-App?node-id=0-1&t=XflWhA6vv9QhBgJm-1",
+			},
+		],
 	},
-	{
-		title: "Library Room Booking (LibCal) Redesign",
-		description:
-			"A UX redesign of Northeastern University’s library room booking system, including responsive web layouts and a new mobile app design focused on accessibility and student workflows.",
-		image: "/images/image.png",
-		tech: ["Figma", "UX Research", "Wireframing", "Prototyping"],
-		github: "#",
-		demo: "#",
-	},
-];
+};
 
 // Weather
 export const WMO_CODES = {
@@ -201,10 +246,7 @@ export const COORDINATES = {
 export const weather_apiURL = (lat, lon) =>
 	`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&current=weather_code,temperature_2m,is_day&timezone=auto`;
 
-
 // Skills and Timeline
-import { Code, Database, Cloud, Wrench } from "lucide-react";
-
 export const skillCategories = [
 	{
 		icon: Code,
@@ -285,10 +327,10 @@ Wallpapers: Unsplash | Andreas Gücklhorn | Andre Benz
 `;
 
 export const WALLPAPERS = [
-	{id: 1, url:"/images/wallpapers/Gold.png", name: "Gold" },
-	{id: 2, url:"/images/wallpapers/Blue Violet.png", name: "Blue Violet" },
-	{id: 3, url:"/images/wallpapers/andreas-gucklhorn-mawU2PoJWfU-unsplash.jpg", name: "Andreas Gucklhorn"},
-	{id: 4, url:"/images/wallpapers/andre-benz-qJfznuTMAYA-unsplash.jpg", name: "Andre Benz"},
+	{ id: 1, url: "/images/wallpapers/Gold.png", name: "Gold" },
+	{ id: 2, url: "/images/wallpapers/Blue Violet.png", name: "Blue Violet" },
+	{ id: 3, url: "/images/wallpapers/andreas-gucklhorn-mawU2PoJWfU-unsplash.jpg", name: "Andreas Gucklhorn" },
+	{ id: 4, url: "/images/wallpapers/andre-benz-qJfznuTMAYA-unsplash.jpg", name: "Andre Benz" },
 ];
 
 export const ACCENT_COLORS = [
