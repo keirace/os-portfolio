@@ -30,7 +30,6 @@ const Desktop = () => {
 
 			{/* Desktop Icons */}
 			<DesktopIcon label="resume.pdf" icon="/images/resume.png" position="bottom-30 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.RESUME)} />
-			<DesktopIcon label="credits.txt" icon="/images/plain.png" position="bottom-60 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.TEXTEDIT, CREDITS, "credits.txt")} />
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 import { PencilRuler, Clock9, File, House, Image, Trash } from "lucide-react";
-import { WINDOW_IDS } from "./index.js";
+import { WINDOW_IDS, CREDITS} from "./index.js";
 
 const SIDEBAR_ITEMS = [
 	{ id: "applications", label: "Applications", icon: PencilRuler },
@@ -72,12 +72,10 @@ const INITIAL_FINDER_FILES = {
 			icon: "/images/folder.png",
 			position: "top-10 left-40",
 		},
-	],
-	trash: [],
-	desktop: [
-		{ label: "resume.pdf", icon: "/images/resume.png", position: "bottom-30 right-10" },
 		{ label: "credits.txt", icon: "/images/plain.png", position: "bottom-60 right-10" },
 	],
+	trash: [],
+	desktop: [{ label: "resume.pdf", icon: "/images/resume.png", position: "bottom-30 right-10" }],
 };
 
 const createFileActions = (openWindow, setActiveFolder, setHistory) => ({
@@ -108,6 +106,8 @@ const createFileActions = (openWindow, setActiveFolder, setHistory) => ({
 		} else if (file.label === "Desktop") {
 			setActiveFolder("desktop");
 			setHistory("desktop");
+		} else if (file.label === "credits.txt") {
+			openWindow(WINDOW_IDS.TEXTEDIT, CREDITS, "credits.txt");
 		}
 	},
 	recents: (file) => {

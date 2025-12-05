@@ -30,6 +30,13 @@ const useFinderStore = create(
 				state.historyIndex = state.history.length - 1;
 			})
 		},
+		clearHistory: () => {
+			set((state) => {
+				state.history = [];
+				state.historyIndex = -1;
+				console.log("cleared history");
+			});
+		},
 		goToPrevious: () => {
 			set((state) => {
 				if (state.historyIndex > 0) {
