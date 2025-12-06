@@ -2,16 +2,17 @@ import { MapPin, Briefcase, GraduationCap } from "lucide-react";
 import Window from "./Window";
 import { WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
+import { useMemo } from "react";
 
 const About = () => {
 	const width = useWindowsStore((state) => state.windows[WINDOW_IDS.ABOUT].width);
-	const isMobile = width < 500;
+	const layoutClass = useMemo(() => (width < 500 ? "flex-col" : "md:flex-row"), [width]);
 
 	return (
 		<div className="window-container">
-			<div className={`${isMobile ? "flex-col" : "md:flex-row"} flex gap-8 items-start`}>
+			<div className={`${layoutClass} flex gap-8 items-start`}>
 				<div className="shrink-0">
-					<img src="/images/photos.png" alt="Pinkaew Horputra" className="w-48 h-48 rounded-full object-cover" />
+					<img src="/images/pin.PNG" alt="Pinkaew Horputra" loading="lazy" className="w-48 h-48 rounded-full object-cover" />
 				</div>
 
 				<div className="flex-1">
