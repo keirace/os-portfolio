@@ -10,7 +10,7 @@ const Projects = () => {
 	const isDarkMode = useSystemStore((state) => state.isDarkMode);
 	const { isMobile, isLgScreen } = useMemo(
 		() => ({
-			isMobile: width < 640,
+			isMobile: width < 600,
 			isLgScreen: width >= 1024,
 		}),
 		[width]
@@ -38,12 +38,12 @@ const Projects = () => {
 								<div key={index} className="bg-secondary rounded-lg overflow-hidden hover:shadow-lg transition-shadow mb-6">
 									<div className={`grid ${isMobile ? "grid-cols-1" : "grid-cols-3"}`}>
 										<div className="col-span-1 items-center justify-center flex h-full">
-											<img src={project.image} alt={project.title} className="aspect-square object-cover overflow-hidden h-full" />
+											<img src={project.image} alt={project.title} loading="lazy" className="aspect-square object-cover overflow-hidden h-full" />
 										</div>
 
 										<div className={`col-span-2 p-6 flex flex-col justify-between`}>
 											<h3 className="text-primary font-medium mb-2">{project.title}</h3>
-											<p className="text-secondary-foreground mb-4">{project.description}</p>
+											<p className="text-secondary-foreground text-sm mb-4">{project.description}</p>
 
 											<div className="flex flex-wrap gap-2 mb-4">
 												{project.tech.map((tech, i) => (
@@ -56,7 +56,7 @@ const Projects = () => {
 											<div className="flex gap-4">
 												{project.github && (
 													<a href={project.github} className="link">
-														<img src={githubIcon} className="w-4 h-4" />
+														<img src={githubIcon} loading="lazy" className="w-4 h-4" />
 														<span>Code</span>
 													</a>
 												)}
