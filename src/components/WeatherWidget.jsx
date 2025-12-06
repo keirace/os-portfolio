@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { Navigation } from "lucide-react";
 import { WMO_CODES, MOCK_WEATHER_DATA, COORDINATES, weather_apiURL } from "@constants";
 import { useGSAP } from "@gsap/react";
@@ -21,9 +21,9 @@ const WeatherWidget = ({ style }) => {
 		const fetchWeather = async () => {
 			const { latitude: lat, longitude: lon } = COORDINATES;
 			try {
-				const fetchWeather = await fetch(weather_apiURL(lat, lon));
-				const data = await fetchWeather.json();
-				setWeatherData(data);
+				// const fetchWeather = await fetch(weather_apiURL(lat, lon));
+				// const data = await fetchWeather.json();
+				// setWeatherData(data);
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching weather data:", error);
@@ -67,6 +67,14 @@ const WeatherWidget = ({ style }) => {
 		return Math.round(celcius);
 	};
 
+	const weatherIconUrl = useMemo(() => {
+		return `https://maps.gstatic.com/weather/v1/${WMO_CODES[current?.weather_code]}${isNight ? "_dark" : ""}.svg`;
+	}, [current?.weather_code, isNight]);
+
+	const weatherDescription = useMemo(() => {
+		return WMO_CODES[current?.weather_code].replace(/_/g, " ");
+	}, [current?.weather_code]);
+
 	return (
 		<div ref={widgetRef} className={`${bgClass} ${style} text-white font-semibold select-none rounded-3xl w-42 h-42 flex flex-col justify-between p-4 gap-5 shadow-lg`}>
 			{loading ? (
@@ -82,8 +90,8 @@ const WeatherWidget = ({ style }) => {
 						<p className="text-4xl">{toInt(current?.temperature_2m)}°</p>
 					</div>
 					<div className="flex flex-col text-sm leading-4 gap-1">
-						<img src={`https://maps.gstatic.com/weather/v1/${WMO_CODES[current?.weather_code]}${isNight ? "_dark" : ""}.svg`} alt="weather icon" className="w-4 h-4" />
-						{WMO_CODES[current?.weather_code] && <p className="capitalize">{WMO_CODES[current?.weather_code].replace(/_/g, " ")}</p>}
+						<img src={weatherIconUrl} alt="weather icon" className="w-4 h-4" />
+						{weatherDescription && <p className="capitalize">{weatherDescription}</p>}
 						<div className="flex gap-1">
 							<p className="">H: {toInt(daily.temperature_2m_max[0])}°</p>
 							<p className="">L: {toInt(daily.temperature_2m_min[0])}°</p>

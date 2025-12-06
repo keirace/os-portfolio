@@ -17,7 +17,30 @@ const Settings = ({ activeFolder, setActiveFolder }) => {
 	const selected = WALLPAPERS.find((wp) => wp.url === wallpaper)?.id;
 	const selectedAccent = ACCENT_COLORS.find((ac) => ac.class === accentColor)?.name;
 	useEffect(() => {
-		document.body.style.backgroundImage = `url("${wallpaper}")`;
+		let cancelled = false;
+		if (!wallpaper) return;
+
+		const img = new Image();
+		img.src = wallpaper;
+		img.decoding = "async";
+		img.onload = () => {
+			if (cancelled) return;
+
+			const applyWallpaper = () => {
+				document.body.style.backgroundImage = `url("${wallpaper}")`;
+			};
+			
+			if ("requestIdleCallback" in window) {
+				requestIdleCallback(applyWallpaper, { timeout: 1000 });
+			} else {
+				// Fallback for browsers without requestIdleCallback
+				setTimeout(applyWallpaper, 0);
+			}
+		};
+
+		return () => {
+			cancelled = true;
+		};
 	}, [wallpaper]);
 
 	useEffect(() => {
@@ -36,7 +59,13 @@ const Settings = ({ activeFolder, setActiveFolder }) => {
 					<div className={`grid grid-cols-2 ${isMobile ? "sm:grid-cols-2" : "sm:grid-cols-4"} gap-4`}>
 						{WALLPAPERS.map((wp) => (
 							<div key={wp.id} className="relative" onClick={() => setWallpaper(wp.url)}>
-								<img src={wp.url} alt={wp.name} className={`w-full aspect-16/10 object-cover rounded-lg transition-all ${selected === wp.id && "ring-4 ring-accent"}`} />
+								<img
+									src={wp.url}
+									alt={wp.name}
+									loading="lazy"
+									decoding="async"
+									className={`w-full aspect-16/10 object-cover rounded-lg transition-all ${selected === wp.id && "ring-4 ring-accent"}`}
+								/>
 							</div>
 						))}
 					</div>

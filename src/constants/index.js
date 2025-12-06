@@ -83,6 +83,7 @@ export const INITIAL_WINDOW_STATES = {
 		width: 450,
 		height: 600,
 		position: { x: innerWidth / 2 - 225, y: innerHeight / 2 - 300 },
+		minWidth: 420,
 	},
 	[WINDOW_IDS.TERMINAL]: {
 		...WINDOW_DEFAULTS,

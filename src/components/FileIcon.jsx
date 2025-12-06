@@ -1,17 +1,20 @@
-import { useGSAP } from "@gsap/react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { Draggable } from "gsap/all";
-import { useLayoutEffect, useRef } from "react";
 
-const FileIcon = ({ label, icon, onDoubleClick, position,  }) => {
+const FileIcon = ({ label, icon, onDoubleClick, position }) => {
 	const iconRef = useRef(null);
 	const parentRef = useRef(null);
+	const draggableRef = useRef(null);
+	const createdRef = useRef(false);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
+		// Cache parent element for bounds (read once)
 		parentRef.current = iconRef.current?.parentElement;
 	}, []);
 
-	useGSAP(() => {
-		if (!Draggable) return;
+	const createDraggable = useCallback(() => {
+		if (createdRef.current || !iconRef.current || !parentRef.current || !Draggable) return;
+		createdRef.current = true;
 		const draggable = Draggable.create(iconRef.current, {
 			bounds: parentRef.current,
 			inertia: true,
@@ -20,29 +23,32 @@ const FileIcon = ({ label, icon, onDoubleClick, position,  }) => {
 			onPress() {
 				this.target.focus();
 			},
-			onDragStart: function () {
+			onDragStart() {
 				this.startZIndex = this.target.style.zIndex;
 				this.target.style.zIndex = 1000;
 			},
-			onDragEnd: function () {
+			onDragEnd() {
 				this.target.style.zIndex = this.startZIndex;
-				// if (setPosition) {
-				// 	const parentRect = parentRef.current.getBoundingClientRect();
-				// 	const iconRect = this.target.getBoundingClientRect();
-				// 	const top = iconRect.top - parentRect.top;
-				// 	const left = iconRect.left - parentRect.left;
-				// 	const position = `top-${Math.round(top)} left-${Math.round(left)}`;
-				// 	setPosition(label, position);
-				// }
 			},
 			cursor: "default",
 		});
+		draggableRef.current = draggable && draggable.length ? draggable[0] : null;
+	}, []);
+
+	// Create Draggable lazily on first pointerdown / touchstart
+	useEffect(() => {
+		if (!iconRef.current) return;
+		const tempRef = iconRef.current;
+		tempRef.addEventListener("pointerdown", createDraggable, { passive: true });
+		tempRef.addEventListener("touchstart", createDraggable, { passive: true });
 		return () => {
-			if (draggable && draggable.length > 0) {
-				draggable[0].kill();
+			tempRef.removeEventListener("pointerdown", createDraggable);
+			tempRef.removeEventListener("touchstart", createDraggable);
+			if (draggableRef.current) {
+				draggableRef.current.kill();
 			}
 		};
-	}, [parentRef.current]);
+	}, [createDraggable]);
 
 	return (
 		<button
@@ -61,4 +67,4 @@ const FileIcon = ({ label, icon, onDoubleClick, position,  }) => {
 	);
 };
 
-export default FileIcon;
+export default React.memo(FileIcon);

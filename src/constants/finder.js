@@ -36,7 +36,7 @@ const INITIAL_FINDER_FILES = {
 		{
 			label: "Terminal.app",
 			icon: "/images/terminal.png",
-			position: "top-10 right-20",
+			position: "top-10 left-60",
 		},
 		{
 			label: "Safari.app",

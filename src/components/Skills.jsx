@@ -4,17 +4,12 @@ import { useGSAP } from "@gsap/react";
 import { WINDOW_IDS, apps } from "@constants";
 import { skillCategories, timeline } from "@constants";
 import useWindowsStore from "@store/window";
-import { Fragment, useMemo } from "react";
+import { useMemo } from "react";
 
 const Skills = () => {
 	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.SKILLS]);
 	const isOpen = window?.isOpen;
-	const { isMobile } = useMemo(
-		() => ({
-			isMobile: window.width < 768,
-		}),
-		[window.width]
-	);
+	const layoutClass = useMemo(() => (window.width < 600 ? "grid-cols-1" : "md:grid-cols-2"), [window.width]);
 
 	useGSAP(() => {
 		if (!isOpen) return;
@@ -29,7 +24,7 @@ const Skills = () => {
 		<div className="window-container">
 			<h3 className="mb-6">Skills & Technologies</h3>
 
-			<div className={`grid ${isMobile ? "grid-cols-1" : "md:grid-cols-2"} gap-6`}>
+			<div className={`grid ${layoutClass} gap-6`}>
 				{skillCategories.map((category, index) => {
 					const Icon = category.icon;
 					return (

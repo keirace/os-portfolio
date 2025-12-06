@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useCallback } from "react";
 import Window from "./Window";
 import { WINDOW_IDS, apps, SIDEBAR_ITEMS, createFileActions } from "@constants";
 import FileIcon from "./FileIcon";
@@ -8,8 +8,8 @@ import { RenderSidebar, TitleBar } from "./FinderComponents";
 
 const Finder = ({ isTrash = false }) => {
 	const { activeFolder, setActiveFolder, setPosition, filesInFolder, setHistory, clearHistory } = useFinderStore();
-	const { openWindow } = useWindowsStore();
-	const { isOpen } = useWindowsStore((state) => state.windows[isTrash ? WINDOW_IDS.TRASH : WINDOW_IDS.FINDER]);
+	const openWindow = useWindowsStore((state) => state.openWindow);
+	const isOpen = useWindowsStore((state) => state.windows[isTrash ? WINDOW_IDS.TRASH : WINDOW_IDS.FINDER].isOpen);
 	const mainContentRef = useRef(null);
 
 	useEffect(() => {
@@ -21,7 +21,15 @@ const Finder = ({ isTrash = false }) => {
 		setHistory(isTrash ? "trash" : "user");
 	}, [clearHistory, isOpen, isTrash, setActiveFolder, setHistory]);
 
+	const files = useMemo(() => (filesInFolder ? filesInFolder[activeFolder] || [] : []), [activeFolder, filesInFolder]);
+
 	const fileActions = useMemo(() => createFileActions(openWindow, setActiveFolder, setHistory), [openWindow, setActiveFolder, setHistory]);
+	const handleOpenFile = useCallback(
+		(file) => {
+			fileActions[activeFolder]?.(file);
+		},
+		[activeFolder, fileActions]
+	);
 
 	return (
 		<div className="finder">
@@ -33,15 +41,8 @@ const Finder = ({ isTrash = false }) => {
 			{/* Main Content */}
 			<div className="main-content" ref={mainContentRef}>
 				{/* Files Display */}
-				{filesInFolder[activeFolder]?.map((file, index) => (
-					<FileIcon
-						key={activeFolder + index}
-						label={file.label}
-						icon={file.icon}
-						position={file.position}
-						onDoubleClick={() => fileActions[activeFolder]?.(file)}
-						setPosition={setPosition}
-					/>
+				{files.map((file) => (
+					<FileIcon key={`${activeFolder}-${file.label}`} label={file.label} icon={file.icon} position={file.position} onDoubleClick={() => handleOpenFile(file)} setPosition={setPosition} />
 				))}
 				{/* Address Bar */}
 				{/* <div className="flex items-center gap-1 absolute bottom-10 w-full h-10 border-t border-t-primary/10 backdrop-blur-xl"></div> */}

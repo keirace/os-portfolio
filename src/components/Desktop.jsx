@@ -29,9 +29,9 @@ const Desktop = () => {
 			</Stickies>
 
 			{/* Desktop Icons */}
-			<DesktopIcon label="user" icon="/images/folder.png" position="bottom-50 left-20" onDoubleClick={() => openWindow(WINDOW_IDS.FINDER)} />
-			<DesktopIcon label="Racer.app" icon="/images/racer.png" position="bottom-80 right-30" onDoubleClick={() => openWindow(WINDOW_IDS.RACER)} />
-			<DesktopIcon label="resume.pdf" icon="/images/resume.png" position="bottom-40 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.RESUME)} />
+			<DesktopIcon label="user" icon="/images/folder.png" position="top-60 left-70" onDoubleClick={() => openWindow(WINDOW_IDS.FINDER)} />
+			<DesktopIcon label="Racer.app" icon="/images/racer.png" position="top-90 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.RACER)} />
+			<DesktopIcon label="resume.pdf" icon="/images/resume.png" position="top-60 right-20" onDoubleClick={() => openWindow(WINDOW_IDS.RESUME)} />
 		</div>
 	);
 };

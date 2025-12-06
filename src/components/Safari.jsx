@@ -4,19 +4,20 @@ import { ChevronDown, ChevronLeft, ChevronRight, Plus, ChevronsRight, X, Search 
 import { PanelLeftIcon } from "lucide-react";
 import Window from "./Window";
 import WindowControls from "./WindowControls";
+import { useMemo } from "react";
 
 const Safari = ({ address }) => {
 	return (
 		<div className="bg-secondary w-full h-full select-none">
-			{address && <iframe src={address} title="Safari Window" className="w-full h-full" />}
+			{address && <iframe src={address} title="Safari Window" loading="lazy" className="w-full h-full" />}
 		</div>
 	);
 };
 
 const TitleBar = ({ address }) => {
 	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.SAFARI]);
-	const isMobile = window?.width <= 640;
-	address = address.split("//")[1]?.replace("www.", "") || "";
+	const isMobile = useMemo(() => window?.width <= 640, [window?.width]);
+	address = useMemo(() => address.split("//")[1]?.replace("www.", "") || "", [address]);
 
 	return (
 		<div className="title-bar-container">

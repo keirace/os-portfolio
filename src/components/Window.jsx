@@ -1,6 +1,6 @@
 import useWindowsStore from "@store/window";
 import { Draggable } from "gsap/all";
-import { useEffect, useState, useLayoutEffect, useRef } from "react";
+import { useEffect, useState, useLayoutEffect, useRef, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import WindowControls from "./WindowControls";
@@ -42,7 +42,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 		return () => {
 			instance.kill();
 		};
-	}, []);
+	}, [id, width, height, focusWindow, dragWindow]);
 
 	// Open animation
 	useGSAP(() => {
@@ -95,19 +95,22 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 		gsap.to(windowRef.current, { width: window.width, height: window.height, x: position.x, y: position.y, duration: 0.5, ease: "power3.out" });
 	}, [isMaximized]);
 
-	// Handle Resize
-	const handleResize = (e, direction) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setResizeDir(direction);
+	// Handle Resize - memoized
+	const handleResize = useCallback(
+		(e, direction) => {
+			e.preventDefault();
+			e.stopPropagation();
+			setResizeDir(direction);
 
-		startPos.current = { x: e.clientX, y: e.clientY };
+			startPos.current = { x: e.clientX, y: e.clientY };
 
-		// Get current GSAP size and position
-		startSize.current = { width: windowRef.current.offsetWidth, height: windowRef.current.offsetHeight, x: position.x, y: position.y };
+			// Get current GSAP size and position
+			startSize.current = { width: windowRef.current.offsetWidth, height: windowRef.current.offsetHeight, x: position.x, y: position.y };
 
-		focusWindow(id);
-	};
+			focusWindow(id);
+		},
+		[focusWindow, position.x, position.y, id]
+	);
 
 	useEffect(() => {
 		const handleMouseMove = (e) => {
@@ -115,7 +118,10 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			const dx = e.clientX - startPos.current.x;
 			const dy = e.clientY - startPos.current.y;
 
-			let { newWidth, newHeight, newX, newY } = startSize.current;
+			let newWidth = startSize.current.width;
+			let newHeight = startSize.current.height;
+			let newX = startSize.current.x;
+			let newY = startSize.current.y;
 			let updatePosition = false;
 
 			if (resizeDir.includes("e")) {
@@ -123,7 +129,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			}
 			if (resizeDir.includes("w")) {
 				newWidth = Math.max(minWidth, startSize.current.width - dx);
-				if (newWidth !== minWidth) {
+				if (newWidth > minWidth) {
 					newX = startSize.current.x + dx;
 					updatePosition = true;
 				}
@@ -133,7 +139,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			}
 			if (resizeDir.includes("n")) {
 				newHeight = Math.max(minHeight, startSize.current.height - dy);
-				if (newHeight !== minHeight) {
+				if (newHeight > minHeight) {
 					newY = startSize.current.y + dy;
 					updatePosition = true;
 				}
@@ -143,7 +149,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			resizeWindow(id, { width: newWidth, height: newHeight });
 
 			// Sync draggable position
-			if (updatePosition) {
+			if (updatePosition && draggableRef.current) {
 				draggableRef.current.update();
 				dragWindow(id, { x: newX, y: newY });
 			}
@@ -160,15 +166,13 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			document.removeEventListener("mousemove", handleMouseMove);
 			document.removeEventListener("mouseup", handleMouseUp);
 		};
-	}, [resizeDir]);
+	}, [resizeDir, resizeWindow, id, dragWindow, minWidth, minHeight]);
 
 	return (
 		<div ref={windowRef} id={id} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute rounded-xl flex flex-col overflow-hidden glassmorphism`}>
 			{/* Window Title Bar */}
 			<div ref={titleBarRef} className="shrink-0">
-				{customizeTitleBar ? (
-					customizeTitleBar
-				) : (
+				{customizeTitleBar || (
 					<div className="title-bar-container">
 						<WindowControls title={id} />
 						<div className="text-center grow text-secondary-foreground -ml-10 text-sm font-medium">{title}</div>
@@ -177,7 +181,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 			</div>
 
 			{/* Window Content */}
-			<div className="min-h-0 h-full overflow-y-auto">{children}</div>
+			<div className="min-h-0 h-full overflow-y-auto relative">{children}</div>
 
 			{/* --- Resize Handles --- */}
 			<div className="absolute left-0 top-0 bottom-0 w-2 ew-resize" onMouseDown={(e) => handleResize(e, "w")} />

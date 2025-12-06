@@ -1,18 +1,16 @@
 import { Document, pdfjs, Page } from "react-pdf";
 import Window from "./Window";
-import { CircleArrowDown, ChevronDown, Share, PanelLeftIcon, ZoomIn, ZoomOut, Info, Search, Rotate3D, RotateCw } from "lucide-react";
+import { CircleArrowDown, ChevronDown, Share, PanelLeftIcon, ZoomIn, ZoomOut, Info, Search } from "lucide-react";
 import useWindowsStore from "@store/window";
 import { WINDOW_IDS, apps } from "@constants";
-import { TransformWrapper, TransformComponent, useControls } from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import WindowControls from "./WindowControls";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
-const Controls = () => {
-	const { zoomIn, zoomOut } = useControls();
-
+const Controls = ({ zoomIn, zoomOut }) => {
 	return (
 		<div>
 			<button onClick={() => zoomIn()}>
@@ -25,28 +23,19 @@ const Controls = () => {
 	);
 };
 
-const Resume = () => {
-	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.RESUME]);
-    const containerWidth = window?.width;
+const Resume = ({ width, minWidth }) => {
 	return (
-		<div className="bg-secondary flex justify-center items-start h-full w-full overflow-auto">
+		<div className="bg-secondary flex justify-center items-start h-full w-full overflow-auto" style={{ minWidth: minWidth }}>
 			<TransformComponent>
-				<Document
-					file="/files/Pin_Horputra_Resume.pdf"
-					loading="Loading resume..."
-					onLoadError={(error) => console.error("Error while loading document!", error)}
-				>
-					<Page pageNumber={1} width={containerWidth} renderTextLayer renderAnnotationLayer />
+				<Document file="/files/Pin_Horputra_Resume.pdf" loading="Loading resume..." onLoadError={(error) => console.error("Error while loading document!", error)}>
+					<Page pageNumber={1} width={width} renderTextLayer renderAnnotationLayer />
 				</Document>
 			</TransformComponent>
 		</div>
 	);
 };
 
-const TitleBar = () => {
-	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.RESUME]);
-	const isMobile = window?.width <= 768;
-
+const TitleBar = ({ isMobile, zoomIn, zoomOut }) => {
 	return (
 		<div className="title-bar-container flex-col border-b relative">
 			<div className="resume title-bar">
@@ -65,7 +54,7 @@ const TitleBar = () => {
 					<button>
 						<Info />
 					</button>
-					<Controls />
+					<Controls zoomIn={zoomIn} zoomOut={zoomOut} />
 					<button>
 						<Share />
 					</button>
@@ -87,14 +76,27 @@ const TitleBar = () => {
 };
 
 const ResumeWindow = () => {
+	const window = useWindowsStore((state) => state.windows[WINDOW_IDS.RESUME]);
+	const { width, minWidth } = window;
+	const isMobile = width <= 768;
+
 	return (
-		<TransformWrapper minScale={0.5} maxScale={4} initialScale={1} smooth={true} wheel={{ wheelDisabled: false, step: 1, smoothStep: 0.01 }} panning={{ velocityDisabled: true, wheelPanning: true }}>
-			{Window({
-				id: WINDOW_IDS.RESUME,
-				title: apps[WINDOW_IDS.RESUME].label,
-				children: <Resume />,
-				customizeTitleBar: <TitleBar />,
-			})}
+		<TransformWrapper
+			minScale={0.5}
+			maxScale={4}
+			initialScale={1}
+			smooth={true}
+			wheel={{ wheelDisabled: true, step: 1, smoothStep: 0.01 }}
+			panning={{ velocityDisabled: true, wheelPanning: true }}
+		>
+			{({ zoomIn, zoomOut }) =>
+				Window({
+					id: WINDOW_IDS.RESUME,
+					title: apps[WINDOW_IDS.RESUME].label,
+					children: <Resume width={width} minWidth={minWidth} />,
+					customizeTitleBar: <TitleBar isMobile={isMobile} zoomIn={zoomIn} zoomOut={zoomOut} />,
+				})
+			}
 		</TransformWrapper>
 	);
 };
