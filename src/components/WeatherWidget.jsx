@@ -21,9 +21,9 @@ const WeatherWidget = ({ style }) => {
 		const fetchWeather = async () => {
 			const { latitude: lat, longitude: lon } = COORDINATES;
 			try {
-				// const fetchWeather = await fetch(weather_apiURL(lat, lon));
-				// const data = await fetchWeather.json();
-				// setWeatherData(data);
+				const fetchWeather = await fetch(weather_apiURL(lat, lon));
+				const data = await fetchWeather.json();
+				setWeatherData(data);
 				setLoading(false);
 			} catch (error) {
 				console.error("Error fetching weather data:", error);
