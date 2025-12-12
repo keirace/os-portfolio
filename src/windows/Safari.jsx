@@ -2,8 +2,8 @@ import { WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
 import { ChevronDown, ChevronLeft, ChevronRight, Plus, ChevronsRight, X, Search } from "lucide-react";
 import { PanelLeftIcon } from "lucide-react";
-import Window from "./Window";
-import WindowControls from "./WindowControls";
+import Window from "../components/Window";
+import WindowControls from "../components/WindowControls";
 import { useMemo } from "react";
 
 const Safari = ({ address }) => {

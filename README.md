@@ -1,16 +1,28 @@
-# React + Vite
+# PinOS Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive portfolio website inspired by macOS design, built with React, Tailwind and GSAP. It provides a desktop-like environment with draggable windows, a dock, Finder, Terminal, PDF resume viewer, and mini-games.
 
-Currently, two official plugins are available:
+![PinOS Portfolio](https://img.shields.io/badge/React-19.2.0-61DAFB?style=flat&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?style=flat&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1.17-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- macOS-inspired UI (windows, dock, menu bar)
+- Draggable, resizable windows with smooth GSAP animations
+- Finder with sidebar navigation and history
+- Terminal emulator with custom commands
+- PDF resume viewer with pinch/zoom pan support
+- Settings with wallpaper and accent color controls
+- Mini-games lazily loaded
+- Accessible keyboard interactions and tooltips
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19 (hooks)
+- Vite 7
+- Tailwind CSS 4
+- Zustand (state management) + Immer
+- GSAP (animations + Draggable)
+- react-pdf, react-zoom-pan-pinch
+- react-tooltip, lucide-react (icons)

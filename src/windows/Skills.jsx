@@ -1,4 +1,4 @@
-import Window from "./Window";
+import Window from "../components/Window";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { WINDOW_IDS, apps } from "@constants";

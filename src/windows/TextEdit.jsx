@@ -1,4 +1,4 @@
-import Window from "./Window";
+import Window from "../components/Window";
 import useWindowsStore from "@store/window";
 import { WINDOW_IDS } from "@constants";
 import { useRef } from "react";

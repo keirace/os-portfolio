@@ -1,5 +1,5 @@
 import { MapPin, Briefcase, GraduationCap } from "lucide-react";
-import Window from "./Window";
+import Window from "../components/Window";
 import { WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
 import { useMemo } from "react";

@@ -1,6 +1,6 @@
-import Window from "./Window";
+import Window from "../components/Window";
 import { WINDOW_IDS, apps, WALLPAPERS, ACCENT_COLORS } from "@constants";
-import { RenderSidebar, TitleBar } from "./FinderComponents";
+import { RenderSidebar, TitleBar } from "../components/FinderComponents";
 import useWindowsStore from "@store/window";
 import useSystemStore from "@store/system";
 import { useState, useEffect } from "react";
@@ -11,7 +11,7 @@ const Settings = ({ activeFolder, setActiveFolder }) => {
 	const isMobile = window.width <= 640;
 	const { isDarkMode, setIsDarkMode } = useSystemStore();
 
-	const [wallpaper, setWallpaper] = useState(WALLPAPERS[0].url);
+	const [wallpaper, setWallpaper] = useState(WALLPAPERS[3].url);
 	const [accentColor, setAccentColor] = useState(ACCENT_COLORS[0].class);
 
 	const selected = WALLPAPERS.find((wp) => wp.url === wallpaper)?.id;
