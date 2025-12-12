@@ -13,8 +13,31 @@ export default defineConfig({
 			"@utilities": resolve(dirname(fileURLToPath(import.meta.url)), "src/utilities"),
 			"@constants": resolve(dirname(fileURLToPath(import.meta.url)), "src/constants"),
 			"@store": resolve(dirname(fileURLToPath(import.meta.url)), "src/store"),
-			"@hoc": resolve(dirname(fileURLToPath(import.meta.url)), "src/hoc"),
 			"@windows": resolve(dirname(fileURLToPath(import.meta.url)), "src/windows"),
+		},
+	},
+	build: {
+		chunkSizeWarningLimit: 600,
+		rollupOptions: {
+			output: {
+				manualChunks(id) {
+					if (id.includes("node_modules")) {
+						if (id.includes("gsap")) {
+							return "vendor_gsap";
+						}
+						if (id.includes("lucide-react")) {
+							return "vendor_lucide";
+						}
+						if (id.includes("react-pdf") || id.includes("pdfjs-dist")) {
+							return "vendor-pdf";
+						}
+						if (id.includes("react-zoom-pan-pinch")) {
+							return "vendor-zoom";
+						}
+						return "vendor";
+					}
+				},
+			},
 		},
 	},
 });

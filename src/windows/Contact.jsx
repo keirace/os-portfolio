@@ -1,6 +1,6 @@
 import { Mail, Send } from "lucide-react";
 import { useState } from "react";
-import Window from "./Window";
+import Window from "../components/Window";
 import { WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
 import emailjs from "@emailjs/browser";
@@ -37,8 +37,8 @@ const Contact = () => {
 
 	const socials = [
 		{ icon: Mail, label: "Email", value: "work@pinkaew.me", href: "mailto:work@pinkaew.me" },
-		{ icon: "/images/linkedin.png", label: "LinkedIn", value: "linkedin.com/in/pinkaew-horputra", href: "#" },
-		{ icon: "/images/github-mark.png", label: "GitHub", value: "github.com/keirace", href: "#" },
+		{ icon: "/images/linkedin.webp", label: "LinkedIn", value: "linkedin.com/in/pinkaew-horputra", href: "https://linkedin.com/in/pinkaew-horputra" },
+		{ icon: "/images/github-mark.webp", label: "GitHub", value: "github.com/keirace", href: "https://github.com/keirace" },
 	];
 	return (
 		<div className="window-container">

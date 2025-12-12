@@ -45,12 +45,12 @@ const INITIAL_FINDER_FILES = {
 		},
 		{
 			label: "TextEdit.app",
-			icon: "/images/textedit.png",
+			icon: "/images/textedit.webp",
 			position: "top-10 left-10",
 		},
 		{
 			label: "Racer.app",
-			icon: "/images/racer.png",
+			icon: "/images/racer.webp",
 			position: "top-40 left-30",
 		},
 		{
@@ -60,12 +60,12 @@ const INITIAL_FINDER_FILES = {
 		},
 		{
 			label: "Clawstrike",
-			icon: "/images/clawstrike.png",
+			icon: "/images/clawstrike.webp",
 			position: "top-40 left-80",
 		},
 		{
 			label: "Settings.app",
-			icon: "/images/settings.png",
+			icon: "/images/settings.webp",
 			position: "bottom-20 left-10",
 		}
 	],
@@ -79,17 +79,17 @@ const INITIAL_FINDER_FILES = {
 	user: [
 		{
 			label: "Documents",
-			icon: "/images/folder.png",
+			icon: "/images/folder.webp",
 			position: "top-20 left-20",
 		},
 		{
 			label: "Pictures",
-			icon: "/images/folder.png",
+			icon: "/images/folder.webp",
 			position: "top-50 left-20",
 		},
 		{
 			label: "Desktop",
-			icon: "/images/folder.png",
+			icon: "/images/folder.webp",
 			position: "top-10 left-40",
 		},
 		{ label: "credits.txt", icon: "/images/plain.png", position: "bottom-60 right-10" },

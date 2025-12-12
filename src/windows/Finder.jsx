@@ -1,10 +1,10 @@
 import { useEffect, useRef, useMemo, useCallback } from "react";
-import Window from "./Window";
+import Window from "../components/Window";
 import { WINDOW_IDS, apps, SIDEBAR_ITEMS, createFileActions } from "@constants";
-import FileIcon from "./FileIcon";
+import FileIcon from "../components/FileIcon";
 import useFinderStore from "@store/finder";
 import useWindowsStore from "@store/window";
-import { RenderSidebar, TitleBar } from "./FinderComponents";
+import { RenderSidebar, TitleBar } from "../components/FinderComponents";
 
 const Finder = ({ isTrash = false }) => {
 	const { activeFolder, setActiveFolder, setPosition, filesInFolder, setHistory, clearHistory } = useFinderStore();

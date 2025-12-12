@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, startTransition } from "react";
-import Window from "./Window.jsx";
+import Window from "../components/Window.jsx";
 import { getDateTime } from "@utilities/navbar.js";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";

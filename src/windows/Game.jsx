@@ -1,4 +1,4 @@
-import Window from "./Window";
+import Window from "../components/Window";
 import { useMemo } from "react";
 import { apps } from "@constants";
 import useWindowsStore from "@store/window";

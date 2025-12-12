@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react";
-import Window from "./Window";
+import Window from "../components/Window";
 import { projects, WINDOW_IDS, apps } from "@constants";
 import useWindowsStore from "@store/window";
 import useSystemStore from "@store/system";
@@ -56,7 +56,7 @@ const Projects = () => {
 											<div className="flex gap-4">
 												{project.github && (
 													<a href={project.github} className="link">
-														<img src={githubIcon} loading="lazy" className="w-4 h-4" />
+														<img src={githubIcon} alt="GitHub" loading="lazy" className="w-4 h-4" />
 														<span>Code</span>
 													</a>
 												)}

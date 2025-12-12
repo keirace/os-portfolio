@@ -1,10 +1,10 @@
 import { Document, pdfjs, Page } from "react-pdf";
-import Window from "./Window";
+import Window from "../components/Window";
 import { CircleArrowDown, ChevronDown, Share, PanelLeftIcon, ZoomIn, ZoomOut, Info, Search } from "lucide-react";
 import useWindowsStore from "@store/window";
 import { WINDOW_IDS, apps } from "@constants";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import WindowControls from "./WindowControls";
+import WindowControls from "../components/WindowControls";
 
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";

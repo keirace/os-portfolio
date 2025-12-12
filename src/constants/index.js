@@ -4,20 +4,20 @@ export * from "./finder";
 // Apps for Dock
 import { User, FolderOpen, Award, Mail } from "lucide-react";
 export const apps = {
-	finder: { id: "finder", icon: "/images/finder.png", label: "Finder" },
-	settings: { id: "settings", icon: "/images/settings.png", label: "Settings" },
-	terminal: { id: "terminal", icon: "/images/terminal.png", label: "Terminal" },
+	finder: { id: "finder", icon: "/images/finder.webp", label: "Finder" },
+	settings: { id: "settings", icon: "/images/settings.webp", label: "Settings" },
+	terminal: { id: "terminal", icon: "/images/terminal.webp", label: "Terminal" },
 	about: { id: "about", icon: User, color: "text-orange-400", label: "About Me" },
 	projects: { id: "projects", icon: FolderOpen, color: "text-blue-400", label: "Projects" },
 	skills: { id: "skills", icon: Award, color: "text-pink-400", label: "Skills" },
 	contact: { id: "contact", icon: Mail, color: "text-purple-400", label: "Contact" },
-	browser: { id: "browser", icon: "/images/safari.png", label: "Safari" },
-	resume: { id: "resume", icon: "/images/preview.png", label: "Preview", hidden: true },
-	textedit: { id: "textedit", icon: "/images/textedit.png", label: "TextEdit", hidden: true },
-	trash: { id: "trash", icon: "/images/trash.png", label: "Trash" },
-	clawstrike: { id: "clawstrike", icon: "/images/clawstrike.png", label: "Clawstrike", hidden: true },
+	browser: { id: "browser", icon: "/images/safari.webp", label: "Safari" },
+	resume: { id: "resume", icon: "/images/preview.webp", label: "Preview", hidden: true },
+	textedit: { id: "textedit", icon: "/images/textedit.webp", label: "TextEdit", hidden: true },
+	trash: { id: "trash", icon: "/images/trash.webp", label: "Trash" },
+	clawstrike: { id: "clawstrike", icon: "/images/clawstrike.webp", label: "Clawstrike", hidden: true },
 	triangle: { id: "triangle-back-to-home", icon: "/images/triangle.jpg", label: "Triangle", hidden: true },
-	racer: { id: "racer", icon: "/images/racer.png", label: "Racer", hidden: true },
+	racer: { id: "racer", icon: "/images/racer.webp", label: "Racer", hidden: true },
 };
 
 export const tooltipStyle = {
@@ -133,7 +133,7 @@ export const projects = {
 				title: "pinOS - Portfolio macOS (This one!)",
 				description:
 					"A macOS-inspired personal portfolio website built with React and Tailwind CSS, featuring interactive windowed applications, a dynamic desktop environment, and a responsive design.",
-				image: "/images/pinos.png",
+				image: "/images/pinos.webp",
 				tech: ["React", "Tailwind CSS", "Zustand", "EmailJS", "GSAP", "Vite"],
 				github: "https://github.com/keirace/os-portfolio",
 				demo: "https://pinos.pinkaew.me",
@@ -142,7 +142,7 @@ export const projects = {
 				title: "E-Commerce Platform (Nike Clone)",
 				description:
 					"A full-featured e-commerce platform built with Next.js and React, featuring product listings, shopping cart functionality, user authentication, and payment processing using Stripe.",
-				image: "/images/ecommerce.png",
+				image: "/images/ecommerce.webp",
 				tech: ["Next.js", "React", "Node.js", "PostgreSQL", "Stripe", "Tailwind CSS", "Better Auth"],
 				github: "https://github.com/keirace/ecommerce",
 				demo: "https://ecommerce.pinkaew.me",
@@ -159,7 +159,7 @@ export const projects = {
 				title: "Three.js Journey Learning Progress",
 				description:
 					"A collection of interactive 3D scenes and technical experiments built while mastering WebGL. Features custom shaders, physics simulations, and particle systems based on the curriculum from the renowned Three.js Journey course.",
-				image: "/images/threejs.png",
+				image: "/images/threejs.webp",
 				tech: ["Three.js", "React Three Fiber", "React", "Three.js", "JavaScript", "GLSL", "Blender"],
 				github: "https://github.com/keirace/threejs-journey",
 				demo: "https://threejsjourney.pinkaew.me/",
@@ -174,7 +174,7 @@ export const projects = {
 				title: "Framer Motion Portfolio",
 				description:
 					"A sleek and modern portfolio website made for my UI/UX course built with React and Framer Motion, featuring smooth animations, interactive components, and a responsive design to showcase projects and skills.",
-				image: "/images/framer.png",
+				image: "/images/framer.webp",
 				tech: ["Framer Motion"],
 				demo: "https://pinkaew-h.framer.website/",
 			},
@@ -182,7 +182,7 @@ export const projects = {
 				title: "Library Room Booking (LibCal) Redesign",
 				description:
 					"A UX redesign of Northeastern University’s library room booking system, including responsive web layouts and a new mobile app design focused on accessibility and student workflows.",
-				image: "/images/libcal.png",
+				image: "/images/libcal.webp",
 				tech: ["Figma", "UX Research", "Wireframing", "Prototyping"],
 				demo: "https://www.figma.com/proto/dwJXM9exuklVw4qvWk5tA7/NU-Library-App?node-id=0-1&t=KZrPizjXzXOP9uh7-1",
 			},

@@ -2,23 +2,12 @@ import "./App.css";
 import { useEffect, useMemo } from "react";
 import Navbar from "@components/Navbar";
 import Dock from "@components/Dock";
-import About from "@components/About";
-import Resume from "@components/Resume";
+import Desktop from "@components/Desktop";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
-import Projects from "@components/Projects";
-import BootingScreen from "@components/BootingScreen";
 import useSystemStore from "@store/system";
-import Desktop from "@components/Desktop";
-import Skills from "@components/Skills";
-import Contact from "@components/Contact";
-import Terminal from "@components/Terminal";
-import Finder from "@components/Finder";
-import TextEdit from "@components/TextEdit";
-import Safari from "@components/Safari";
-import Settings from "@components/Settings";
-import Game from "@components/Game";
 import { WINDOW_IDS } from "@constants";
+import { About, Contact, Projects, Resume, Skills, Terminal, Finder, TextEdit, Safari, Settings, Game } from "@windows";
 
 gsap.registerPlugin(Draggable);
 
