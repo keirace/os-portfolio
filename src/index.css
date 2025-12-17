@@ -55,7 +55,6 @@
 	--sidebar-accent-foreground: oklch(0.205 0 0);
 	--sidebar-border: oklch(0.922 0 0);
 	--sidebar-ring: oklch(0.708 0 0);
-	--background-image: url("/images/wallpapers/Gold.png");
 	--border-white: rgba(255, 255, 255, 0.341);
 }
 
@@ -94,11 +93,9 @@
 	--sidebar-accent-foreground: oklch(0.985 0 0);
 	--sidebar-border: oklch(0.269 0 0);
 	--sidebar-ring: oklch(0.439 0 0);
-	--background-image: url("/images/wallpapers/Blue Violet.png");
 }
 
 @theme inline {
-	--color-wallpaper: var(--background-image);
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-card: var(--card);
@@ -178,10 +175,12 @@
 	}
 }
 
-html {
+html, body {
 	font-size: var(--font-size);
 	overflow: hidden;
 	cursor: url("/images/cursor.svg"), auto;
+	height: 100%;
+	width: 100%;
 }
 
 @utility flex-center {
@@ -229,7 +228,7 @@ html {
 
 	body {
 		font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-		@apply text-foreground bg-cover bg-center bg-no-repeat bg-(image:--background-image) transition-all duration-1000 ease-in-out;
+		@apply text-foreground bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out;
 	}
 
 	img {
