@@ -11,7 +11,7 @@ const host = "pinos";
 
 const getInitialHistory = () => {
 	return [
-		{ type: "response", content: `Last login: ${getDateTime()} on ttys021` },
+		{ type: "response", content: `Last login: ${getDateTime().long} on ttys021` },
 		{ type: "response", content: "Welcome to PinOS Terminal!" },
 		{ type: "response", content: "Type 'help' to get started." },
 	];
@@ -88,6 +88,7 @@ const Terminal = () => {
 	}, [history]);
 
 	useGSAP(() => {
+		if (!isOpen) return;
 		const randomDelay = Math.random() * 2 + 1; // Random delay between 1 to 3 seconds
 		gsap.fromTo(".history", { display: "none" }, { display: "block", stagger: 0.5, ease: "power2.inOut", delay: randomDelay });
 		setTimeout(() => {

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useCallback } from "react";
 import { Draggable } from "gsap/all";
+import { useDoubleTap } from "use-double-tap";
 
 const FileIcon = ({ label, icon, onDoubleClick, position }) => {
 	const iconRef = useRef(null);
@@ -50,6 +51,8 @@ const FileIcon = ({ label, icon, onDoubleClick, position }) => {
 		};
 	}, [createDraggable]);
 
+	const bind = useDoubleTap(onDoubleClick);
+
 	return (
 		<button
 			aria-label={label}
@@ -60,6 +63,7 @@ const FileIcon = ({ label, icon, onDoubleClick, position }) => {
 			onKeyDown={(e) => {
 				if (e.key === "Enter") onDoubleClick();
 			}}
+			{...bind}
 		>
 			<div className="icon">{icon ? <img src={icon} alt={label} /> : <span className="text-6xl">📄</span>}</div>
 			<p>{label}</p>

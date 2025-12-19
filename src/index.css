@@ -175,12 +175,19 @@
 	}
 }
 
-html, body {
+html,
+#root,
+body {
 	font-size: var(--font-size);
 	overflow: hidden;
 	cursor: url("/images/cursor.svg"), auto;
 	height: 100%;
 	width: 100%;
+	touch-action: none;
+}
+
+body {
+	background-color: rgb(0, 0, 0);
 }
 
 @utility flex-center {
@@ -218,7 +225,7 @@ html, body {
 }
 
 @utility glassmorphism {
-	@apply backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl/50 ring ring-ring;
+	@apply backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl/50 ring ring-black/20;
 }
 
 @layer base {
@@ -251,6 +258,12 @@ html, body {
 				ul {
 					@apply flex-center;
 				}
+				&:first-child li:not(:nth-child(-n + 2)) {
+					@apply hidden sm:flex;
+				}
+				&:nth-child(2) > ul {
+					@apply hidden sm:flex;
+				}
 				button,
 				p {
 					@apply relative py-1 px-2 text-sm text-nowrap;
@@ -278,13 +291,21 @@ html, body {
 	}
 
 	#dock {
-		@apply fixed bottom-2 left-1/2 -translate-x-1/2 z-500 bg-transparent p-2;
+		@apply fixed overflow-auto h-40 flex items-end w-full bottom-0 left-1/2 -translate-x-1/2 z-500 bg-transparent p-2;
+		&::-webkit-scrollbar {
+			@apply hidden;
+		}
 
 		.dock-container {
-			@apply flex items-center gap-4 bg-secondary/50 px-3 py-2 glassmorphism;
-
+			@apply flex items-center gap-1 sm:gap-4 bg-secondary/50 px-3 py-2 glassmorphism;
 			.dock-icon {
-				@apply w-14 h-14 object-contain rounded-xl flex items-center justify-center drop-shadow-sm active:brightness-70;
+				@apply w-11 h-11 sm:w-14 sm:h-14 object-contain rounded-[0.6rem] sm:rounded-xl flex items-center justify-center drop-shadow-sm active:brightness-70;
+			}
+			.icon {
+				@apply mx-1;
+			}
+			.img {
+				@apply w-14 sm:w-17;
 			}
 			.dock-pointer {
 				@apply absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-foreground/70 rounded-full;
@@ -367,9 +388,9 @@ html, body {
 	.finder {
 		@apply flex items-start justify-start h-full;
 		.sidebar {
-			@apply w-40 h-full bg-sidebar/90 backdrop-blur-2xl border-r border-r-background flex flex-col shrink-0 p-3 space-y-1 select-none;
+			@apply w-30 sm:w-40 h-full overflow-x-auto bg-sidebar/90 backdrop-blur-2xl border-r border-r-background flex flex-col shrink-0 p-3 space-y-1 select-none;
 			svg {
-				@apply w-4 text-accent;
+				@apply w-4 h-4 text-accent;
 			}
 		}
 		.address-bar {

@@ -7,6 +7,10 @@ import { fileURLToPath } from "url";
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [react(), tailwindcss()],
+	server: {
+		open: true,
+		host: true,
+	},
 	resolve: {
 		alias: {
 			"@components": resolve(dirname(fileURLToPath(import.meta.url)), "src/components"),
@@ -17,7 +21,7 @@ export default defineConfig({
 		},
 	},
 	build: {
-		chunkSizeWarningLimit: 600,
+		chunkSizeWarningLimit: 500,
 		rollupOptions: {
 			output: {
 				manualChunks(id) {

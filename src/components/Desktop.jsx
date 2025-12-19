@@ -22,14 +22,14 @@ const Desktop = () => {
 	return (
 		<div id="desktop" ref={desktopRef}>
 			<WeatherWidget style="absolute top-10 right-5" />
-			<Stickies className="top-40 left-10">
+			<Stickies className="bottom-40 sm:top-10 left-10">
 				<p>
 					<b>Welcome!</b> 😊 why not start exploring by clicking on one of these apps on the desktop?
 				</p>
 			</Stickies>
 
 			{/* Desktop Icons */}
-			<DesktopIcon label="user" icon="/images/folder.webp" position="top-60 left-70" onDoubleClick={() => openWindow(WINDOW_IDS.FINDER)} />
+			<DesktopIcon label="user" icon="/images/folder.webp" position="top-30 sm:top-80 left-20" onDoubleClick={() => openWindow(WINDOW_IDS.FINDER)} />
 			<DesktopIcon label="Racer.app" icon="/images/racer.webp" position="top-90 right-10" onDoubleClick={() => openWindow(WINDOW_IDS.RACER)} />
 			<DesktopIcon label="resume.pdf" icon="/images/resume.png" position="top-60 right-20" onDoubleClick={() => openWindow(WINDOW_IDS.RESUME)} />
 		</div>
