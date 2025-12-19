@@ -3,6 +3,7 @@ import { useEffect, useMemo } from "react";
 import Navbar from "@components/Navbar";
 import Dock from "@components/Dock";
 import Desktop from "@components/Desktop";
+import BootingScreen from "@components/BootingScreen";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
 import useSystemStore from "@store/system";

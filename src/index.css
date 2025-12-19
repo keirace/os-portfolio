@@ -291,7 +291,7 @@ body {
 	}
 
 	#dock {
-		@apply fixed overflow-auto h-40 flex items-end w-full bottom-0 left-1/2 -translate-x-1/2 z-500 bg-transparent p-2;
+		@apply fixed overflow-auto h-40 flex items-end justify-center w-full bottom-0 left-1/2 -translate-x-1/2 z-500 bg-transparent p-2;
 		&::-webkit-scrollbar {
 			@apply hidden;
 		}
