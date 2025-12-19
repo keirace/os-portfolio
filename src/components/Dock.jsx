@@ -142,7 +142,7 @@ const Dock = () => {
 							key={id}
 							id={id}
 							aria-label={label}
-							className={`w-17 dock-icon ${isActive ? "drop-shadow-lg" : "drop-shadow-md"}`}
+							className={`dock-icon img ${isActive ? "drop-shadow-lg" : "drop-shadow-md"}`}
 							onClick={() => toggleWindow({ id, canOpen: true })}
 							data-tooltip-id={`tooltip-${id}`}
 							data-tooltip-content={label}
@@ -157,13 +157,13 @@ const Dock = () => {
 							key={id}
 							id={id}
 							aria-label={label}
-							className={`group dock-icon bg-white ${isActive ? "shadow-lg" : "shadow-md active:bg-muted-foreground"} `}
+							className={`group dock-icon icon bg-white ${isActive ? "shadow-lg" : "shadow-md active:bg-muted-foreground"} `}
 							onClick={() => toggleWindow({ id, canOpen: true })}
 							data-tooltip-id={`tooltip-${id}`}
 							data-tooltip-content={label}
 							data-tooltip-place="top"
 						>
-							{createElement(icon, { className: `w-10 h-10 stroke-2 ${color}` })}
+							{createElement(icon, { className: `w-8 h-8 sm:w-10 sm:h-10 stroke-2 ${color}` })}
 
 							<Tooltip id={`tooltip-${id}`} border="1px solid var(--border-white)" opacity={0.6} style={tooltipStyle} />
 							{windows[id]?.isOpen && <div className="dock-pointer" />}

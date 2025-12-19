@@ -45,7 +45,7 @@ const Contact = () => {
 			<h1 className="mb-6">Get In Touch</h1>
 			{alert.show && <Alert type={alert.type} text={alert.text} />}
 
-			<div className={`grid ${!isMobile && "grid-cols-2"} gap-8`}>
+			<div className={`grid ${isMobile? "grid-cols-1" : "grid-cols-2"} gap-y-8`}>
 				<div>
 					<p className="text-accent-foreground mb-6">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!</p>
 
@@ -55,10 +55,10 @@ const Contact = () => {
 							const isImage = typeof Icon === "string";
 							return (
 								<a key={index} href={social.href} className="flex items-center gap-4 p-4 rounded-lg bg-card hover:bg-accent transition-colors group">
-									<div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-										{isImage ? <img src={Icon} alt={social.label} className="w-5 h-5 object-contain aspect-auto" /> : <Icon className="w-5 h-5 text-accent" />}
+									<div className="w-10 h-10 bg-blue-100 rounded-lg flex-center aspect-square">
+										{isImage ? <img src={Icon} alt={social.label} className="w-6 h-6 object-contain" /> : <Icon className="w-5 h-5 text-accent" />}
 									</div>
-									<div>
+									<div className="flex flex-col">
 										<p className="text-secondary-foreground group-hover:text-white">{social.label}</p>
 										<p className="text-muted-foreground group-hover:text-white">{social.value}</p>
 									</div>

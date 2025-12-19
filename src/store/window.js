@@ -54,6 +54,7 @@ const useWindowsStore = create(
 				if (window) {
 					if (window.isMaximized) {
 						window.zIndex = state.nextZIndex;
+						window.position = { x: innerWidth / 2 - window.width / 2, y: innerHeight / 2 - window.height / 2 };
 						state.nextZIndex += 1;
 					} else {
 						window.zIndex = 9999;
@@ -66,6 +67,7 @@ const useWindowsStore = create(
 			set((state) => {
 				const window = state.windows[id];
 				if (window) {
+					if (window.isMaximized) return;
 					state.activeMenu = id;
 					window.zIndex = state.nextZIndex;
 					state.nextZIndex += 1;

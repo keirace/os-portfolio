@@ -94,7 +94,9 @@ const Navbar = () => {
 							</button>
 						</li>
 					</ul>
-					<p>{currentDate}</p>
+					{/* Responsive date and time */}
+					<p className="sm:hidden">{currentDate.short}</p>
+					<p className="hidden sm:block">{currentDate.long}</p>
 				</div>
 			</div>
 			{/* Dropdown menu */}

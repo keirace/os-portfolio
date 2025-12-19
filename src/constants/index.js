@@ -26,23 +26,21 @@ export const tooltipStyle = {
 	borderRadius: "0.25rem",
 	backgroundColor: "var(--color-background)",
 	color: "var(--color-foreground)",
-	"--tw-ring-color": "var(--ring)",
-	"--tw-ring-shadow": "var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor)",
 };
 
 export const INITIAL_Z_INDEX = 1;
 
 // Window state configurations
 export const WINDOW_DEFAULTS = {
-	width: 600,
-	height: 400,
+	width: window.innerWidth * 0.8,
+	height: window.innerHeight * 0.6,
 	minWidth: 400,
 	minHeight: 300,
 	isOpen: false,
 	isMinimized: false,
 	isMaximized: false,
 	dockIconPosition: { x: 0, y: 0 },
-	position: { x: innerWidth / 2 - 300, y: innerHeight / 2 - 200 },
+	position: { x: innerWidth / 2 - (window.innerWidth * 0.8) / 2, y: innerHeight / 2 - (window.innerHeight * 0.6) / 2 },
 	zIndex: INITIAL_Z_INDEX,
 	data: null,
 	title: null,

@@ -7,7 +7,7 @@ import WindowControls from "./WindowControls";
 
 const Window = ({ id, title, children, customizeTitleBar }) => {
 	// Store
-	const { windows, dragWindow, focusWindow, resizeWindow } = useWindowsStore();
+	const { windows, dragWindow, focusWindow, resizeWindow, maximizeWindow } = useWindowsStore();
 	const window = windows[id];
 	const { height, width, isOpen, position, isMinimized, isMaximized, dockIconPosition, zIndex, minWidth, minHeight } = window;
 
@@ -26,7 +26,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 	useLayoutEffect(() => {
 		const [instance] = Draggable.create(windowRef.current, {
 			trigger: titleBarRef.current,
-			bounds: { top: 30, left: -width + 10, right: innerWidth - width - 100, bottom: innerHeight - height - 100 },
+			bounds: { top: isMaximized ? 0 : 30, left: -width + 10, right: innerWidth - width - 100, bottom: innerHeight - height - 100 },
 			edgeResistance: 0.65,
 			inertia: true,
 			type: "x,y",
@@ -42,7 +42,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 		return () => {
 			instance.kill();
 		};
-	}, [id, width, height, focusWindow, dragWindow]);
+	}, [id, width, height, focusWindow, dragWindow, isMaximized]);
 
 	// Open animation
 	useGSAP(() => {
@@ -171,7 +171,7 @@ const Window = ({ id, title, children, customizeTitleBar }) => {
 	return (
 		<div ref={windowRef} id={id} style={{ visibility: "visible", zIndex: zIndex }} className={`absolute rounded-xl flex flex-col overflow-hidden glassmorphism`}>
 			{/* Window Title Bar */}
-			<div ref={titleBarRef} className="shrink-0">
+			<div ref={titleBarRef} className="shrink-0" onDoubleClick={() => maximizeWindow(id)}>
 				{customizeTitleBar || (
 					<div className="title-bar-container">
 						<WindowControls title={id} />
